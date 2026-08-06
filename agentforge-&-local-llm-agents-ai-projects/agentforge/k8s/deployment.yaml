@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agentforge-api
+  labels:
+    app: agentforge-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: agentforge-api
+  template:
+    metadata:
+      labels:
+        app: agentforge-api
+    spec:
+      containers:
+        - name: api
+          image: agentforge:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: OLLAMA_HOST
+              value: "http://ollama:11434"
+            - name: OLLAMA_LLM_MODEL
+              value: "qwen3"
+            - name: OLLAMA_EMBED_MODEL
+              value: "nomic-embed-text"
+            - name: CHROMA_PATH
+              value: "/app/data/chroma"
+            - name: SQLITE_PATH
+              value: "/app/data/checkpoints.db"
+          volumeMounts:
+            - name: data
+              mountPath: /app/data
+            - name: assets
+              mountPath: /app/assets
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 20
+            periodSeconds: 20
+      volumes:
+        - name: data
+          emptyDir: {}
+        - name: assets
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: agentforge-api
+spec:
+  selector:
+    app: agentforge-api
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8000
+  type: ClusterIP

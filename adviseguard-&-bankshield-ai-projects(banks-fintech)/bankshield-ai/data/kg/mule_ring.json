@@ -1,0 +1,154 @@
+{
+  "nodes": [
+    {
+      "id": "CUST-1001",
+      "label": "Customer",
+      "name": "Alex Rivera"
+    },
+    {
+      "id": "CUST-1002",
+      "label": "Customer",
+      "name": "Jamie Ortiz"
+    },
+    {
+      "id": "CUST-1003",
+      "label": "Customer",
+      "name": "Chris Nguyen"
+    },
+    {
+      "id": "DEV-SHARED-77",
+      "label": "Device",
+      "fingerprint": "fp-77"
+    },
+    {
+      "id": "IP-203.0.113.44",
+      "label": "IP",
+      "address": "203.0.113.44"
+    },
+    {
+      "id": "PH-555-0144",
+      "label": "Phone",
+      "number": "+1-555-0144"
+    },
+    {
+      "id": "BEN-9001",
+      "label": "Company",
+      "name": "QuickCash Disbursements LLC"
+    },
+    {
+      "id": "TXN-W-1001",
+      "label": "Transaction",
+      "amount": 48500,
+      "rail": "wire"
+    },
+    {
+      "id": "TXN-W-1002",
+      "label": "Transaction",
+      "amount": 22000,
+      "rail": "wire"
+    },
+    {
+      "id": "TXN-W-1003",
+      "label": "Transaction",
+      "amount": 17500,
+      "rail": "ach"
+    },
+    {
+      "id": "CUST-2002",
+      "label": "Customer",
+      "name": "Jordan Lee"
+    },
+    {
+      "id": "BEN-OFAC-1",
+      "label": "Company",
+      "name": "ShellTrade Ltd"
+    },
+    {
+      "id": "COUNTRY-CY",
+      "label": "Country",
+      "code": "CY"
+    }
+  ],
+  "edges": [
+    {
+      "source": "CUST-1001",
+      "target": "DEV-SHARED-77",
+      "type": "OWNS"
+    },
+    {
+      "source": "CUST-1002",
+      "target": "DEV-SHARED-77",
+      "type": "SHARES_DEVICE"
+    },
+    {
+      "source": "CUST-1003",
+      "target": "DEV-SHARED-77",
+      "type": "SHARES_DEVICE"
+    },
+    {
+      "source": "CUST-1001",
+      "target": "IP-203.0.113.44",
+      "type": "SHARES_IP"
+    },
+    {
+      "source": "CUST-1002",
+      "target": "IP-203.0.113.44",
+      "type": "SHARES_IP"
+    },
+    {
+      "source": "CUST-1001",
+      "target": "PH-555-0144",
+      "type": "SHARES_PHONE"
+    },
+    {
+      "source": "CUST-1003",
+      "target": "PH-555-0144",
+      "type": "SHARES_PHONE"
+    },
+    {
+      "source": "CUST-1001",
+      "target": "TXN-W-1001",
+      "type": "OWNS"
+    },
+    {
+      "source": "TXN-W-1001",
+      "target": "BEN-9001",
+      "type": "TRANSFERRED_TO"
+    },
+    {
+      "source": "CUST-1002",
+      "target": "TXN-W-1002",
+      "type": "OWNS"
+    },
+    {
+      "source": "TXN-W-1002",
+      "target": "BEN-9001",
+      "type": "TRANSFERRED_TO"
+    },
+    {
+      "source": "CUST-1003",
+      "target": "TXN-W-1003",
+      "type": "OWNS"
+    },
+    {
+      "source": "TXN-W-1003",
+      "target": "BEN-9001",
+      "type": "SHARES_BENEFICIARY"
+    },
+    {
+      "source": "CUST-1002",
+      "target": "BEN-9001",
+      "type": "SHARES_BENEFICIARY"
+    },
+    {
+      "source": "CUST-2002",
+      "target": "BEN-OFAC-1",
+      "type": "TRANSFERRED_TO"
+    },
+    {
+      "source": "BEN-OFAC-1",
+      "target": "COUNTRY-CY",
+      "type": "RELATED_TO"
+    }
+  ]
+}

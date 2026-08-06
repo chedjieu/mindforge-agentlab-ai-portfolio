@@ -1,0 +1,11 @@
+__pycache__/
+.venv/
+.env
+*.sqlite
+.pytest_cache/
+.ruff_cache/
+dist/
+*.egg-info/
+data/audit.jsonl
+data/local_store/
+evals/results/

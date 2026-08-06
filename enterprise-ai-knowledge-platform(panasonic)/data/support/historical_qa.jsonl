@@ -1,0 +1,3 @@
+{"query": "LED blinks 3 times what do I do?", "answer": "Follow KB-BAT-TREE: power cycle then check PN-8801 delta."}
+{"query": "How to RMA a device?", "answer": "Open TicketPattern-RMA and ship within 14 days per KB-RMA."}
+{"query": "Firmware update steps?", "answer": "Install FW-2.4.1 via USB recovery; do not unplug."}

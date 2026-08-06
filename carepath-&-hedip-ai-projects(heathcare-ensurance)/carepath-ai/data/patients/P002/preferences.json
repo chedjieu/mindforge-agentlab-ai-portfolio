@@ -1,0 +1,6 @@
+{
+  "avoid_injectables": false,
+  "prefer_non_sedating": true,
+  "lifestyle_goals": ["smoking cessation", "pulmonary rehab"],
+  "goals": ["reduce daytime sedation", "improve mood"]
+}

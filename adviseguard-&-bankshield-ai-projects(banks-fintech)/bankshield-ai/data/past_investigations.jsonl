@@ -1,0 +1,2 @@
+{"case_id": "CASE-MULE-HIST", "fraud_types": ["wire", "mule"], "decision": "file_sar", "notes": "Shared device ring confirmed"}
+{"case_id": "CASE-OFAC-HIST", "fraud_types": ["sanctions"], "decision": "block", "notes": "SDN near match blocked"}

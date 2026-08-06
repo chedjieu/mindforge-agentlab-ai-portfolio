@@ -1,0 +1,7 @@
+{
+  "avoid_injectables": true,
+  "avoid_medication_classes": ["injectable GLP-1"],
+  "lifestyle_goals": ["walking program", "lower carb evenings"],
+  "cost_sensitivity": "moderate",
+  "goals": ["prefer oral therapies", "minimize GI side effects"]
+}

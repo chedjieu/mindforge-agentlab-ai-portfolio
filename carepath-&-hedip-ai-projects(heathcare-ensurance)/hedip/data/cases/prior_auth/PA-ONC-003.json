@@ -1,0 +1,10 @@
+{
+  "case_id": "PA-ONC-003",
+  "title": "Oncology regimen aligned",
+  "summary": "Cancer treatment meets guideline and policy criteria",
+  "service": "oncology_infusion",
+  "expected_decision": "approve",
+  "patient": {"id": "M300", "conditions": ["breast cancer"], "age": 61},
+  "prior_therapies": ["surgery", "methotrexate"],
+  "documentation": {"pt_complete": true, "pathology": true}
+}

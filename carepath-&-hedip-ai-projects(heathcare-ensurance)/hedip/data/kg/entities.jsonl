@@ -1,0 +1,8 @@
+{"id": "pat-m100", "type": "Patient", "name": "M100"}
+{"id": "svc-mri", "type": "Procedure", "name": "mri_lumbar"}
+{"id": "drug-ada", "type": "Medication", "name": "adalimumab"}
+{"id": "pol-step", "type": "Policy", "name": "step therapy biologics"}
+{"id": "prov-77", "type": "Provider", "name": "PRV-77"}
+{"id": "clm-001", "type": "Claim", "name": "CLM-001"}
+{"id": "cond-t2dm", "type": "Condition", "name": "Type 2 diabetes"}
+{"id": "guide-ada", "type": "Guideline", "name": "diabetes CKD guideline"}

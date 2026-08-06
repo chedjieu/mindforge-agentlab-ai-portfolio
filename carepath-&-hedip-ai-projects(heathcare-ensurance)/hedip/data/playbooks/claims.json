@@ -1,0 +1,1 @@
+{"domain": "claims", "summary": "Denial prevention before submission", "steps": ["intake", "icd", "cpt", "coverage", "coding", "fraud_signals", "predict", "appeal"]}

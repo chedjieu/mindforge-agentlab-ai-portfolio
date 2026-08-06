@@ -1,0 +1,12 @@
+{
+  "case_id": "CLM-001",
+  "title": "Upcoded E/M with missing docs",
+  "summary": "High denial risk claim needing fix-first",
+  "expected_decision": "fix_first",
+  "icd10": ["I10", "E11.9"],
+  "cpt": ["99215"],
+  "documentation_complete": false,
+  "upcoding_risk": true,
+  "denial_risk": 0.82,
+  "issues": ["level 5 without complexity support"]
+}

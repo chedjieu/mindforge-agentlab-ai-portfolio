@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Delivery Cockpit | R&amp;P Agentic Fabric</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>R&amp;P Agentic Delivery Fabric</h1>
+      <p class="subtitle">Multi-tenant engagement assembly — policy packs, reuse broker, judges, audit packs</p>
+    </header>
+
+    <section class="toolbar">
+      <button type="button" id="btn-demo" class="btn-demo">Demo engagement (EdTech / FERPA)</button>
+      <span id="toolbar-status" class="toolbar-status"></span>
+    </section>
+
+    <section id="thread-status" class="thread-status" hidden>
+      <h2>Processing status</h2>
+      <ul id="thread-list"></ul>
+    </section>
+
+    <section>
+      <h2>Pending approvals</h2>
+      <div id="pending-list">
+        <p class="empty">No pending approvals yet.</p>
+      </div>
+    </section>
+
+    <template id="card-template">
+      <article class="card" data-thread-id="">
+        <h3 class="subject"></h3>
+        <div class="meta vertical"></div>
+        <div class="meta tenant"></div>
+        <div class="meta scores"></div>
+        <label>Draft plan summary</label>
+        <textarea class="draft-body"></textarea>
+        <div class="actions">
+          <button type="button" class="btn-approve">Approve</button>
+          <button type="button" class="btn-edit">Save &amp; Approve as Edit</button>
+          <button type="button" class="btn-reject">Reject</button>
+        </div>
+        <div class="status"></div>
+      </article>
+    </template>
+
+    <script>
+      const listEl = document.getElementById("pending-list");
+      const template = document.getElementById("card-template");
+      const threadStatusEl = document.getElementById("thread-status");
+      const threadListEl = document.getElementById("thread-list");
+      const toolbarStatus = document.getElementById("toolbar-status");
+      const btnDemo = document.getElementById("btn-demo");
+      let pollTimer = null;
+
+      function escapeHtml(text) {
+        return String(text ?? "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+      }
+
+      async function fetchJson(url, options) {
+        const res = await fetch(url, options);
+        if (!res.ok) {
+          const text = await res.text();
+          throw new Error(text || res.statusText);
+        }
+        return res.json();
+      }
+
+      async function postAction(threadId, action, editedBody) {
+        return fetchJson(`/approve/${threadId}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action, edited_body: editedBody ?? null }),
+        });
+      }
+
+      function renderPending(items) {
+        listEl.innerHTML = "";
+        if (!items.length) {
+          listEl.innerHTML = '<p class="empty">No pending approvals yet.</p>';
+          return;
+        }
+        for (const item of items) {
+          const node = template.content.cloneNode(true);
+          const card = node.querySelector(".card");
+          card.dataset.threadId = item.thread_id;
+          const p = item.payload || {};
+          const draft = p.draft_plan || {};
+          card.querySelector(".subject").textContent = draft.title || "Engagement plan";
+          card.querySelector(".vertical").textContent = `Vertical: ${p.vertical || "?"} · Pack: ${p.policy_pack_id || "?"}`;
+          card.querySelector(".tenant").textContent = `Tenant: ${p.tenant_id || "?"}`;
+          const scores = p.judge_scores || {};
+          card.querySelector(".scores").textContent =
+            `Judges — compliance: ${scores.compliance ?? "n/a"}, faithfulness: ${scores.faithfulness ?? "n/a"}, leakage: ${scores.leakage ?? "n/a"}, pass: ${scores.pass ?? "n/a"}`;
+          card.querySelector(".draft-body").value = draft.summary || JSON.stringify(draft, null, 2);
+          card.querySelector(".btn-approve").onclick = async () => {
+            await postAction(item.thread_id, "approve", null);
+            card.querySelector(".status").textContent = "Approved — publishing audit pack…";
+          };
+          card.querySelector(".btn-edit").onclick = async () => {
+            const body = card.querySelector(".draft-body").value;
+            await postAction(item.thread_id, "edit", body);
+            card.querySelector(".status").textContent = "Edited & approved…";
+          };
+          card.querySelector(".btn-reject").onclick = async () => {
+            await postAction(item.thread_id, "reject", null);
+            card.querySelector(".status").textContent = "Rejected";
+          };
+          listEl.appendChild(node);
+        }
+      }
+
+      async function refreshThreads() {
+        const threads = await fetchJson("/threads");
+        if (!threads.length) {
+          threadStatusEl.hidden = true;
+          return;
+        }
+        threadStatusEl.hidden = false;
+        threadListEl.innerHTML = threads
+          .map((t) => `<li><code>${escapeHtml(t.thread_id.slice(0, 8))}</code> — ${escapeHtml(t.status)} (${escapeHtml(t.tenant_id || "")})</li>`)
+          .join("");
+      }
+
+      async function poll() {
+        try {
+          const pending = await fetchJson("/pending");
+          renderPending(pending);
+          await refreshThreads();
+        } catch (e) {
+          toolbarStatus.textContent = String(e.message || e);
+        }
+      }
+
+      btnDemo.addEventListener("click", async () => {
+        toolbarStatus.textContent = "Submitting demo…";
+        try {
+          const res = await fetchJson("/ingest/demo", { method: "POST" });
+          toolbarStatus.textContent = `Thread ${res.thread_id.slice(0, 8)}…`;
+          await poll();
+        } catch (e) {
+          toolbarStatus.textContent = String(e.message || e);
+        }
+      });
+
+      poll();
+      pollTimer = setInterval(poll, 2000);
+    </script>
+  </body>
+</html>

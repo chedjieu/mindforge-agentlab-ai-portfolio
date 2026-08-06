@@ -1,0 +1,6 @@
+{
+  "avoid_medication_classes": ["beta-blocker"],
+  "avoid_beta_blocker": true,
+  "lifestyle_goals": ["complete cardiac rehab"],
+  "goals": ["minimize fatigue", "secondary prevention"]
+}

@@ -1,0 +1,26 @@
+{"id": "Q-E01", "query": "What torque specification applies to part PN-4421 on the Osaka assembly line?", "role": "engineer", "expected_domain": "manufacturing", "expect_hitl": false, "expect_citation": true}
+{"id": "Q-E02", "query": "What is PTO accrual for full-time US employees?", "role": "employee", "expected_domain": "hr", "expect_hitl": true, "expect_citation": true}
+{"id": "Q-E03", "query": "LED blinks 3 times on power-up — what is the procedure?", "role": "support", "expected_domain": "support", "expect_hitl": false, "expect_citation": true}
+{"id": "Q-E04", "query": "Which SOP superseded SOP-M-104?", "role": "engineer", "expected_domain": "manufacturing", "expect_hitl": false, "expect_citation": true}
+{"id": "Q-E05", "query": "What is the change window for payment-service?", "role": "sre", "expected_domain": "operations", "expect_hitl": false, "expect_citation": true}
+{"id": "Q-E06", "query": "What is Conn-X12 max current per STD-E-221?", "role": "engineer", "expected_domain": "engineering", "expect_hitl": false, "expect_citation": true}
+{"id": "Q-E07", "query": "Remote work policy for US full-time employees?", "role": "employee", "expected_domain": "hr", "expect_hitl": true, "expect_citation": true}
+{"id": "Q-E08", "query": "How do I RMA a device?", "role": "support", "expected_domain": "support", "expect_hitl": false, "expect_citation": true}
+{"id": "Q-E09", "query": "SEV1 incident first steps?", "role": "sre", "expected_domain": "operations", "expect_hitl": false, "expect_citation": true}
+{"id": "Q-E10", "query": "Which EMC standard supersedes STD-E-050?", "role": "engineer", "expected_domain": "engineering", "expect_hitl": false, "expect_citation": true}
+{"id": "Q-E11", "query": "Seal leak test requirement for PN-4421 at Nagoya?", "role": "quality", "expected_domain": "manufacturing", "expect_hitl": false, "expect_citation": true}
+{"id": "Q-E12", "query": "Parental leave for Role-FT-US?", "role": "hr", "expected_domain": "hr", "expect_hitl": true, "expect_citation": true}
+{"id": "Q-E13", "query": "Firmware update steps for FW-2.4.1?", "role": "support", "expected_domain": "support", "expect_hitl": false, "expect_citation": true}
+{"id": "Q-E14", "query": "Kafka consumer lag runbook threshold?", "role": "sre", "expected_domain": "operations", "expect_hitl": false, "expect_citation": true}
+{"id": "Q-E15", "query": "Thermal hotspot limit for PN-4421 assemblies?", "role": "engineer", "expected_domain": "engineering", "expect_hitl": false, "expect_citation": true}
+{"id": "Q-E16", "query": "Torque wrench calibration interval for TW-Osaka-12?", "role": "manufacturing", "expected_domain": "manufacturing", "expect_hitl": false, "expect_citation": true}
+{"id": "Q-E17", "query": "Travel policy flight class under 6 hours?", "role": "employee", "expected_domain": "hr", "expect_hitl": true, "expect_citation": true}
+{"id": "Q-E18", "query": "Intermittent Conn-X12 troubleshooting?", "role": "support", "expected_domain": "support", "expect_hitl": false, "expect_citation": true}
+{"id": "Q-E19", "query": "auth-service high login error rate runbook?", "role": "sre", "expected_domain": "operations", "expect_hitl": false, "expect_citation": true}
+{"id": "Q-E20", "query": "Housing-H7 draft angle from DES-E-441?", "role": "engineer", "expected_domain": "engineering", "expect_hitl": false, "expect_citation": true}
+{"id": "Q-E21", "query": "Cell insertion force limit for PN-8801?", "role": "manufacturing", "expected_domain": "manufacturing", "expect_hitl": false, "expect_citation": true}
+{"id": "Q-E22", "query": "Expense submission deadline?", "role": "employee", "expected_domain": "hr", "expect_hitl": true, "expect_citation": true}
+{"id": "Q-E23", "query": "Warranty duration basics?", "role": "support", "expected_domain": "support", "expect_hitl": false, "expect_citation": true}
+{"id": "Q-E24", "query": "Canary deploy abort condition?", "role": "sre", "expected_domain": "operations", "expect_hitl": false, "expect_citation": true}
+{"id": "Q-E25", "query": "Does SOP-M-105 apply to PN-4421 at Plant Osaka?", "role": "engineer", "expected_domain": "manufacturing", "expect_hitl": false, "expect_citation": true}
+{"id": "Q-E26", "query": "Code of conduct reporting channel?", "role": "employee", "expected_domain": "hr", "expect_hitl": true, "expect_citation": true}

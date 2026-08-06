@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AdviseGuard — Ops</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>AdviseGuard Ops</h1>
+      <p class="sub">Fraud alert queue · HITL · <a href="/">Customer console →</a></p>
+    </div>
+    <div class="actions">
+      <button id="btn-fraud">Demo Fraud</button>
+      <button id="btn-refresh" class="secondary">Refresh</button>
+    </div>
+  </header>
+  <main class="grid">
+    <section class="panel">
+      <h2>Alert queue</h2>
+      <div id="alerts" class="list"></div>
+    </section>
+    <section class="panel">
+      <h2>Threads</h2>
+      <div id="threads" class="list"></div>
+    </section>
+    <section class="panel wide">
+      <h2>Pending HITL</h2>
+      <div id="pending" class="list"></div>
+    </section>
+    <section class="panel wide">
+      <h2>Case detail</h2>
+      <pre id="case" class="case">Select a fraud thread for evidence and recommendations.</pre>
+    </section>
+  </main>
+  <script>
+    async function refresh() {
+      const alerts = await (await fetch('/alerts')).json();
+      document.getElementById('alerts').innerHTML = alerts.map(a => `
+        <article class="card">
+          <strong>${a.alert_id}</strong> · $${a.amount || 0}
+          <div class="muted">${(a.description || '').slice(0,140)}</div>
+          <button data-id="${a.alert_id}">Investigate</button>
+        </article>`).join('');
+      document.querySelectorAll('[data-id]').forEach(b => b.onclick = async () => {
+        await fetch('/ask', {method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({query: 'Investigate fraud alert', customer_id: 'CUST-1001', alert_id: b.dataset.id})});
+        setTimeout(refresh, 800);
+      });
+      const threads = await (await fetch('/threads')).json();
+      document.getElementById('threads').innerHTML = threads.slice().reverse().map(t => `
+        <article class="card">
+          <strong>${t.alert_id || t.customer_id || t.thread_id.slice(0,8)}</strong>
+          <span class="pill">${t.status}</span>
+          ${t.risk_band ? `<span class="pill risk">${t.risk_band}</span>` : ''}
+          <button data-t="${t.thread_id}">Open</button>
+        </article>`).join('') || '<p class="muted">No threads</p>';
+      document.querySelectorAll('[data-t]').forEach(b => b.onclick = () => openCase(b.dataset.t));
+      const pending = await (await fetch('/pending')).json();
+      document.getElementById('pending').innerHTML = pending.map(item => {
+        const p = item.payload || {};
+        return `<article class="card">
+          <strong>${p.customer_id || item.thread_id}</strong>
+          <span class="pill risk">${p.risk_band || '?'}</span>
+          <div class="muted">${(p.final_response && p.final_response.summary || '').slice(0,200)}</div>
+          <div class="row">
+            <button data-a="${item.thread_id}">Approve</button>
+            <button class="secondary" data-r="${item.thread_id}">Reject</button>
+          </div>
+        </article>`;
+      }).join('') || '<p class="muted">No pending</p>';
+      document.querySelectorAll('[data-a]').forEach(b => b.onclick = () => decide(b.dataset.a, 'approve'));
+      document.querySelectorAll('[data-r]').forEach(b => b.onclick = () => decide(b.dataset.r, 'reject'));
+    }
+    async function openCase(id) {
+      document.getElementById('case').textContent = JSON.stringify(await (await fetch('/case/' + id)).json(), null, 2);
+    }
+    async function decide(id, action) {
+      await fetch('/approve/' + id, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({action})});
+      setTimeout(refresh, 900);
+    }
+    document.getElementById('btn-fraud').onclick = async () => {
+      await fetch('/fraud/demo', {method:'POST'}); setTimeout(refresh, 800);
+    };
+    document.getElementById('btn-refresh').onclick = refresh;
+    refresh(); setInterval(refresh, 4000);
+  </script>
+</body>
+</html>

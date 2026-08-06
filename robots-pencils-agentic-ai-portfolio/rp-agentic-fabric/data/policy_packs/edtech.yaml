@@ -1,0 +1,13 @@
+vertical: edtech
+regs: [FERPA]
+tool_allowlist:
+  - hybrid_search
+  - lookup_entity
+  - traverse_relations
+  - sis_stub_read
+  - get_engagement_history
+retention_days: 2555
+hitl_required: false
+forbidden_topics:
+  - cross_tenant_lookup
+  - student_ssn_bulk_export

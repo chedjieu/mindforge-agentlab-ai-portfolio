@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CarePath AI — Clinician Console</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>CarePath AI</h1>
+      <p class="sub">Personalized treatment plan generation · port 8007</p>
+    </div>
+    <button id="demoBtn" class="secondary">Run P001 demo</button>
+  </header>
+
+  <main class="grid">
+    <section class="panel">
+      <h2>Patients</h2>
+      <div id="patientList" class="patient-list"></div>
+      <button id="generateBtn" class="primary" disabled>Generate plan</button>
+      <p id="selectedMeta" class="muted"></p>
+    </section>
+
+    <section class="panel wide">
+      <h2>Plan &amp; step log</h2>
+      <div id="statusBadge" class="badge">idle</div>
+      <pre id="stepLog" class="log"></pre>
+      <article id="planBody" class="plan"></article>
+      <div id="citations" class="citations"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Safety</h2>
+      <div id="safetyScore" class="score">—</div>
+      <div id="judgeFeedback" class="muted"></div>
+      <h3>Medication alerts</h3>
+      <ul id="medAlerts" class="alerts"></ul>
+      <div id="hitlCard" class="hitl hidden">
+        <h3>Clinician review (HITL)</h3>
+        <textarea id="editBox" rows="8" placeholder="Optional edits…"></textarea>
+        <div class="row">
+          <button id="approveBtn" class="primary">Approve</button>
+          <button id="editBtn" class="secondary">Save edit &amp; approve</button>
+          <button id="rejectBtn" class="danger">Reject</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    let selected = null;
+    let threadId = null;
+    let pollTimer = null;
+
+    async function loadPatients() {
+      const res = await fetch('/api/patients');
+      const patients = await res.json();
+      const el = document.getElementById('patientList');
+      el.innerHTML = '';
+      patients.forEach(p => {
+        const btn = document.createElement('button');
+        btn.className = 'patient';
+        btn.textContent = `${p.display_name || p.patient_id}`;
+        btn.title = p.summary || '';
+        btn.onclick = () => selectPatient(p, btn);
+        el.appendChild(btn);
+      });
+    }
+
+    function selectPatient(p, btn) {
+      selected = p;
+      document.querySelectorAll('.patient').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('generateBtn').disabled = false;
+      document.getElementById('selectedMeta').textContent =
+        (p.summary || '') + ' · prefs: ' + JSON.stringify(p.preferences || {});
+    }
+
+    async function startPlan(patientId, preferences) {
+      clearInterval(pollTimer);
+      setStatus('running');
+      const res = await fetch('/plan', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          patient_id: patientId,
+          query: 'Generate a personalized treatment plan',
+          patient_preferences: preferences || {}
+        })
+      });
+      const data = await res.json();
+      threadId = data.thread_id;
+      pollTimer = setInterval(pollStatus, 800);
+    }
+
+    async function pollStatus() {
+      if (!threadId) return;
+      const res = await fetch('/status/' + threadId);
+      const data = await res.json();
+      setStatus(data.status || 'unknown');
+      document.getElementById('stepLog').textContent = (data.step_log || []).join('\n');
+      document.getElementById('planBody').textContent = data.draft_plan || data.final_plan || '';
+      document.getElementById('safetyScore').textContent =
+        data.safety_score != null ? ('Safety ' + data.safety_score) : '—';
+      document.getElementById('judgeFeedback').textContent = data.judge_feedback || '';
+      renderCitations(data.citations || []);
+      renderMeds(data.medication_review);
+      const hitl = document.getElementById('hitlCard');
+      if (data.status === 'pending_hitl') {
+        hitl.classList.remove('hidden');
+        if (data.interrupt && data.interrupt.draft_plan) {
+          document.getElementById('editBox').value = data.interrupt.draft_plan;
+        }
+      } else {
+        hitl.classList.add('hidden');
+      }
+      if (data.status === 'completed' || data.status === 'failed') {
+        clearInterval(pollTimer);
+      }
+    }
+
+    function renderCitations(cites) {
+      const el = document.getElementById('citations');
+      el.innerHTML = cites.map(c =>
+        `<div class="cite"><strong>${c.id}</strong> ${c.source}: ${c.text || ''}</div>`
+      ).join('');
+    }
+
+    function renderMeds(review) {
+      const el = document.getElementById('medAlerts');
+      el.innerHTML = '';
+      if (!review) return;
+      (review.interactions || []).forEach(i => {
+        const li = document.createElement('li');
+        li.className = (i.severity || '').toLowerCase();
+        li.textContent = `${(i.severity || '').toUpperCase()}: ${(i.pair || []).join(' + ')} — ${i.note || ''}`;
+        el.appendChild(li);
+      });
+      (review.renal_adjustments || []).forEach(r => {
+        const li = document.createElement('li');
+        li.className = 'moderate';
+        li.textContent = `RENAL: ${r.medication} → ${r.action} @ eGFR ${r.egfr} — ${r.note || ''}`;
+        el.appendChild(li);
+      });
+    }
+
+    function setStatus(s) {
+      const b = document.getElementById('statusBadge');
+      b.textContent = s;
+      b.className = 'badge ' + s;
+    }
+
+    async function decide(action) {
+      if (!threadId) return;
+      const edited = document.getElementById('editBox').value;
+      await fetch('/approve/' + threadId, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          action,
+          edited_body: action === 'edit' ? edited : null
+        })
+      });
+      setStatus('running');
+      pollTimer = setInterval(pollStatus, 800);
+    }
+
+    document.getElementById('generateBtn').onclick = () => {
+      if (!selected) return;
+      startPlan(selected.patient_id, selected.preferences || {});
+    };
+    document.getElementById('demoBtn').onclick = async () => {
+      clearInterval(pollTimer);
+      setStatus('running');
+      const res = await fetch('/plan/demo', {method: 'POST'});
+      const data = await res.json();
+      threadId = data.thread_id;
+      pollTimer = setInterval(pollStatus, 800);
+    };
+    document.getElementById('approveBtn').onclick = () => decide('approve');
+    document.getElementById('editBtn').onclick = () => decide('edit');
+    document.getElementById('rejectBtn').onclick = () => decide('reject');
+
+    loadPatients();
+  </script>
+</body>
+</html>

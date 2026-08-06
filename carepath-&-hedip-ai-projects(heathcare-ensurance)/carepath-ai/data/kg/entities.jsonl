@@ -1,0 +1,20 @@
+{"id": "cond-t2dm", "type": "Condition", "name": "Type 2 diabetes mellitus"}
+{"id": "cond-htn", "type": "Condition", "name": "Hypertension"}
+{"id": "cond-ckd", "type": "Condition", "name": "CKD stage 3a"}
+{"id": "cond-copd", "type": "Condition", "name": "COPD"}
+{"id": "cond-mdd", "type": "Condition", "name": "Major depressive disorder"}
+{"id": "cond-postmi", "type": "Condition", "name": "Post-MI"}
+{"id": "med-metformin", "type": "Medication", "name": "metformin"}
+{"id": "med-lisinopril", "type": "Medication", "name": "lisinopril"}
+{"id": "med-atorvastatin", "type": "Medication", "name": "atorvastatin"}
+{"id": "med-amlodipine", "type": "Medication", "name": "amlodipine"}
+{"id": "med-aspirin", "type": "Medication", "name": "aspirin"}
+{"id": "med-omeprazole", "type": "Medication", "name": "omeprazole"}
+{"id": "med-alprazolam", "type": "Medication", "name": "alprazolam"}
+{"id": "med-tramadol", "type": "Medication", "name": "tramadol"}
+{"id": "med-sertraline", "type": "Medication", "name": "sertraline"}
+{"id": "med-metoprolol", "type": "Medication", "name": "metoprolol"}
+{"id": "guide-ada", "type": "Guideline", "name": "ADA Standards of Care T2DM"}
+{"id": "guide-aha", "type": "Guideline", "name": "AHA/ACC Secondary Prevention"}
+{"id": "proto-t2dm", "type": "Protocol", "name": "T2DM CKD protocol"}
+{"id": "lab-egfr", "type": "Lab", "name": "eGFR"}

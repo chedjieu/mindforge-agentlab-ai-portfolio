@@ -1,0 +1,5 @@
+{"source":"app-orders","type":"USES","target":"api-orders"}
+{"source":"api-orders","type":"ACCESSES","target":"db-orders"}
+{"source":"db-orders","type":"CONTAINS","target":"pii-email"}
+{"source":"pii-email","type":"REQUIRES","target":"ctrl-encrypt"}
+{"source":"app-orders","type":"RUNS_ON","target":"cloud-bedrock"}

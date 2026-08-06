@@ -1,0 +1,8 @@
+{"source":"client-asu","type":"HAS_ENGAGEMENT","target":"eng-asu-1001"}
+{"source":"eng-asu-1001","type":"SUBJECT_TO","target":"reg-ferpa"}
+{"source":"eng-asu-1001","type":"REUSES","target":"comp-edtech-onboarding"}
+{"source":"eng-asu-1001","type":"USES_ASSET","target":"asset-sis"}
+{"source":"eng-asu-1001","type":"RELATED_TO","target":"past-asu"}
+{"source":"comp-edtech-onboarding","type":"HAS_RISK","target":"risk-cross-tenant"}
+{"source":"client-careco","type":"SUBJECT_TO","target":"reg-hipaa"}
+{"source":"client-northbank","type":"SUBJECT_TO","target":"reg-glba"}

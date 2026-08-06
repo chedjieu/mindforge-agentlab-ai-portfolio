@@ -1,0 +1,9 @@
+name: payroll_discrepancy
+description: Investigate short paycheck possibly related to leave coding
+steps:
+  - Retrieve pay stub and hours from Workday
+  - Confirm leave balances and recent leave from Leave system
+  - Retrieve payroll discrepancy and leave policies via hybrid GraphRAG
+  - Explain unpaid leave exclusion if coded unpaid
+  - Propose ServiceNow payroll ticket if coding may be wrong
+  - Require Compliance + HITL before ticket create

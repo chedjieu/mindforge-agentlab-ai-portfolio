@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.env
+.git/
+*.md
+evals/
+data/
+checkpoints.sqlite
+warn_test_out.txt
+terminals/

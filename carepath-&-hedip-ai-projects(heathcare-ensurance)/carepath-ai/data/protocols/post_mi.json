@@ -1,0 +1,14 @@
+{
+  "id": "proto-post-mi",
+  "name": "Post-MI secondary prevention",
+  "title": "Post-MI guideline bundle",
+  "conditions": ["post-mi", "myocardial infarction", "hypertension"],
+  "tags": ["cardiology", "beta-blocker"],
+  "summary": "DAPT, high-intensity statin, ACEI, beta-blocker with shared decisions on intolerance.",
+  "steps": [
+    "Confirm DAPT duration",
+    "High-intensity statin adherence",
+    "ACEI optimization",
+    "Document beta-blocker shared decision if preference to avoid"
+  ]
+}

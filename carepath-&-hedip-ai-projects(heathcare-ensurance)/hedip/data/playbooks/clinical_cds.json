@@ -1,0 +1,1 @@
+{"domain": "clinical_cds", "summary": "Personalized treatment planning", "steps": ["extract", "med_check", "generate", "preferences", "evaluate"]}

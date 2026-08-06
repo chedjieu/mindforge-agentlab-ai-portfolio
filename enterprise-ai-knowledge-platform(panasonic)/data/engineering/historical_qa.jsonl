@@ -1,0 +1,3 @@
+{"query": "What is Conn-X12 max current?", "answer": "Per STD-E-221, max current is 3.5 A per pin."}
+{"query": "Which EMC standard is current?", "answer": "STD-E-051 supersedes STD-E-050."}
+{"query": "Thermal hotspot limit for PN-4421?", "answer": "STD-E-310 keeps hotspot under 75°C at 1C charge."}

@@ -1,0 +1,81 @@
+{
+  "Comment": "EGKP ingest stub (AWS Step Functions) — bronze → silver → gold → index. Chat loop must NOT invoke this state machine.",
+  "StartAt": "BronzeIngest",
+  "States": {
+    "BronzeIngest": {
+      "Type": "Task",
+      "Comment": "Pull raw docs from S3 bronze prefix into staging",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "egkp-ingest-bronze",
+        "Payload": {
+          "bucket.$": "$.bucket",
+          "prefix": "bronze/"
+        }
+      },
+      "ResultPath": "$.bronze",
+      "Next": "SilverParse"
+    },
+    "SilverParse": {
+      "Type": "Task",
+      "Comment": "Parse/OCR, normalize, PII scrub, attach ACL tags",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "egkp-ingest-silver",
+        "Payload.$": "$"
+      },
+      "ResultPath": "$.silver",
+      "Next": "GoldChunkEmbed"
+    },
+    "GoldChunkEmbed": {
+      "Type": "Task",
+      "Comment": "Semantic chunk + embed + entity extract",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "egkp-ingest-gold",
+        "Payload.$": "$"
+      },
+      "ResultPath": "$.gold",
+      "Next": "IndexParallel"
+    },
+    "IndexParallel": {
+      "Type": "Parallel",
+      "Branches": [
+        {
+          "StartAt": "UpsertVectors",
+          "States": {
+            "UpsertVectors": {
+              "Type": "Task",
+              "Comment": "Upsert OpenSearch / Bedrock KB",
+              "Resource": "arn:aws:states:::lambda:invoke",
+              "Parameters": {
+                "FunctionName": "egkp-ingest-vectors",
+                "Payload.$": "$"
+              },
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "UpsertNeo4j",
+          "States": {
+            "UpsertNeo4j": {
+              "Type": "Task",
+              "Comment": "MERGE entities/relations into Neo4j",
+              "Resource": "arn:aws:states:::lambda:invoke",
+              "Parameters": {
+                "FunctionName": "egkp-ingest-kg",
+                "Payload.$": "$"
+              },
+              "End": true
+            }
+          }
+        }
+      ],
+      "Next": "Done"
+    },
+    "Done": {
+      "Type": "Succeed"
+    }
+  }
+}

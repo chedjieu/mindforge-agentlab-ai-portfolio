@@ -1,0 +1,41 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8002:8002"
+    environment:
+      HOST: "0.0.0.0"
+      PORT: "8002"
+      EGKP_MODEL: fake
+      EGKP_EMBEDDINGS: fake
+      EGKP_JUDGE_MODEL: fake
+      EGKP_ALLOW_FAKE_FALLBACK: "1"
+      EGKP_NEO4J_URI: bolt://neo4j:7687
+      EGKP_NEO4J_USER: neo4j
+      EGKP_NEO4J_PASSWORD: password
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8002/health')",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  neo4j:
+    image: neo4j:5.25-community
+    profiles: ["neo4j"]
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      NEO4J_AUTH: neo4j/password
+    volumes:
+      - egkp_neo4j:/data
+
+volumes:
+  egkp_neo4j:

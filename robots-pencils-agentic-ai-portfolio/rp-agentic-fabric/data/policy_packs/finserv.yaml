@@ -1,0 +1,13 @@
+vertical: finserv
+regs: [GLBA, SOC2]
+tool_allowlist:
+  - hybrid_search
+  - lookup_entity
+  - traverse_relations
+  - salesforce_stub_read
+  - get_engagement_history
+retention_days: 2555
+hitl_required: true
+forbidden_topics:
+  - unlicensed_financial_advice
+  - cross_tenant_lookup

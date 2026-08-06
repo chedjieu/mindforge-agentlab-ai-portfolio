@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WAIP Associate Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b1f33;
+      --panel: #12324d;
+      --ink: #f4f7fb;
+      --muted: #9db0c3;
+      --accent: #ffc220;
+      --walmart: #0071ce;
+      --ok: #3dd68c;
+      --danger: #ff6b6b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "DM Sans", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, #1a4d7a 0%, transparent 55%),
+        radial-gradient(900px 500px at 100% 0%, #0e3a5c 0%, transparent 50%),
+        linear-gradient(180deg, #071525, #0b1f33 40%, #0a1828);
+    }
+    header {
+      padding: 1.5rem 2rem 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 1rem;
+    }
+    .brand { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; }
+    .brand span { color: var(--accent); }
+    .tag { color: var(--muted); font-size: 0.95rem; max-width: 40rem; }
+    main {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 1rem;
+      padding: 1rem 2rem 2rem;
+    }
+    @media (max-width: 960px) { main { grid-template-columns: 1fr; } }
+    .card {
+      background: color-mix(in srgb, var(--panel) 88%, black);
+      border: 1px solid #234866;
+      border-radius: 14px;
+      padding: 1rem 1.1rem;
+      box-shadow: 0 10px 40px rgba(0,0,0,.25);
+    }
+    label { display: block; font-size: 0.8rem; color: var(--muted); margin-bottom: 0.35rem; }
+    select, textarea, input, button {
+      width: 100%;
+      font: inherit;
+      border-radius: 10px;
+      border: 1px solid #2d5a7a;
+      background: #0c2438;
+      color: var(--ink);
+      padding: 0.7rem 0.8rem;
+    }
+    textarea { min-height: 110px; resize: vertical; }
+    .row { display: flex; gap: 0.6rem; margin-top: 0.75rem; }
+    button {
+      cursor: pointer;
+      background: linear-gradient(180deg, #0b78d1, var(--walmart));
+      border: none;
+      font-weight: 600;
+    }
+    button.secondary { background: #1b3d57; }
+    button.ok { background: linear-gradient(180deg, #2bb673, #1f8f59); }
+    button.danger { background: linear-gradient(180deg, #e85d5d, #c43c3c); }
+    pre, .mono {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.78rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .answer {
+      line-height: 1.5;
+      background: #0a2033;
+      border-radius: 10px;
+      padding: 0.9rem;
+      border-left: 4px solid var(--accent);
+      min-height: 8rem;
+    }
+    .pill {
+      display: inline-block;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      background: #1c4b6e;
+      color: var(--accent);
+      font-size: 0.75rem;
+      margin: 0.15rem 0.2rem 0 0;
+    }
+    h2 { margin: 0 0 0.75rem; font-size: 1rem; }
+    .muted { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <div class="brand">WAIP <span>Associate Console</span></div>
+      <div class="tag">Multi-agent HR · Payroll · Leave · Benefits assistant with hybrid GraphRAG, judges, and HITL-gated actions.</div>
+    </div>
+    <div class="muted mono">:8004 · master + parallel workers</div>
+  </header>
+  <main>
+    <section class="card">
+      <h2>Ask WAIP</h2>
+      <label for="profile">Associate profile</label>
+      <select id="profile"></select>
+      <label for="query" style="margin-top:0.75rem">Question</label>
+      <textarea id="query">My paycheck is short because I took medical leave last week. Can you explain why and open a payroll ticket if necessary?</textarea>
+      <div class="row">
+        <button id="askBtn">Run agents</button>
+        <button class="secondary" id="demoBtn">Load golden demo</button>
+      </div>
+      <h2 style="margin-top:1.2rem">Answer</h2>
+      <div id="answer" class="answer muted">Submit a question to orchestrate parallel specialists.</div>
+      <div id="meta" style="margin-top:0.75rem"></div>
+    </section>
+    <section class="card">
+      <h2>HITL / Tickets / Trace</h2>
+      <div id="hitl" class="muted">No pending approvals.</div>
+      <div class="row" id="hitlActions" style="display:none">
+        <button class="ok" id="approveBtn">Approve ticket</button>
+        <button class="danger" id="rejectBtn">Reject</button>
+      </div>
+      <h2 style="margin-top:1.2rem">Trace</h2>
+      <pre id="trace" class="muted">—</pre>
+    </section>
+  </main>
+  <script>
+    let threadId = null;
+    const $ = (id) => document.getElementById(id);
+
+    async function loadProfiles() {
+      const res = await fetch("/profiles");
+      const data = await res.json();
+      const sel = $("profile");
+      sel.innerHTML = data.map(p =>
+        `<option value="${p.associate_id}">${p.associate_id} — ${p.name} (${p.state} ${p.department})</option>`
+      ).join("");
+    }
+
+    function renderResult(payload) {
+      const r = payload.result || payload.partial || {};
+      $("answer").textContent = r.final_response || (payload.interrupt && payload.interrupt.draft_response) || "—";
+      $("answer").classList.remove("muted");
+      const intents = (r.intents || (payload.interrupt && []) || []).map(i => `<span class="pill">${i}</span>`).join("");
+      const workers = (r.workers || []).map(i => `<span class="pill">${i}</span>`).join("");
+      const tickets = (r.ticket_ids || []).join(", ") || "none";
+      $("meta").innerHTML = `${intents}${workers}<div class="muted" style="margin-top:0.5rem">Tickets: ${tickets}</div>`;
+      $("trace").textContent = JSON.stringify({
+        status: payload.status,
+        judges: r.judges || (payload.interrupt && payload.interrupt.judges),
+        citations: r.citations || (payload.interrupt && payload.interrupt.citations),
+        step_log: r.step_log
+      }, null, 2);
+    }
+
+    async function ask() {
+      $("answer").textContent = "Orchestrating master + parallel workers…";
+      $("hitlActions").style.display = "none";
+      const res = await fetch("/ask", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          associate_id: $("profile").value,
+          query: $("query").value
+        })
+      });
+      const data = await res.json();
+      threadId = data.thread_id;
+      renderResult(data);
+      if (data.status === "awaiting_approval") {
+        $("hitl").innerHTML = `<div>Approval required for: <b>${(data.interrupt.proposed_actions||[]).map(a=>a.action).join(", ")}</b></div>`;
+        $("hitlActions").style.display = "flex";
+      } else {
+        $("hitl").textContent = "No pending approvals.";
+      }
+    }
+
+    async function decide(approved) {
+      const res = await fetch(`/approve/${threadId}`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ approved, note: approved ? "console-approve" : "console-reject" })
+      });
+      const data = await res.json();
+      renderResult(data);
+      $("hitlActions").style.display = "none";
+      $("hitl").textContent = approved ? "Approved — ticket path executed." : "Rejected — no ticket created.";
+    }
+
+    $("askBtn").onclick = ask;
+    $("approveBtn").onclick = () => decide(true);
+    $("rejectBtn").onclick = () => decide(false);
+    $("demoBtn").onclick = () => {
+      $("query").value = "My paycheck is short because I took medical leave last week. Can you explain why and open a payroll ticket if necessary?";
+    };
+    loadProfiles();
+  </script>
+</body>
+</html>

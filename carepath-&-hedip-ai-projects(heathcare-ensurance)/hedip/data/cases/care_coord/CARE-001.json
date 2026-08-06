@@ -1,0 +1,13 @@
+{
+  "case_id": "CARE-001",
+  "title": "Post-discharge CHF",
+  "summary": "High-risk CHF discharge coordination",
+  "high_risk": true,
+  "escalate": true,
+  "tasks": [
+    "Reconcile diuretics and beta-blocker",
+    "Follow-up visit within 7 days",
+    "Daily weight education",
+    "Home health referral"
+  ]
+}

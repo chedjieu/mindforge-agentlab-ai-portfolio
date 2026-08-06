@@ -1,0 +1,13 @@
+services:
+  neo4j:
+    image: neo4j:5
+    ports: ["7476:7474", "7689:7687"]
+    environment:
+      NEO4J_AUTH: neo4j/password
+  postgres:
+    image: postgres:16
+    ports: ["5436:5432"]
+    environment:
+      POSTGRES_PASSWORD: hedip
+      POSTGRES_USER: hedip
+      POSTGRES_DB: hedip

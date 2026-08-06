@@ -1,0 +1,9 @@
+{"associate_id": "*", "rel": "WORKS_AT", "from": "Associate", "to": "Store", "store": "1001", "country": "US"}
+{"associate_id": "A1001", "rel": "HAS_ROLE", "from": "Associate", "to": "Role", "role": "Pharmacy Tech"}
+{"associate_id": "A1001", "rel": "ELIGIBLE_FOR", "from": "Role", "to": "BenefitsPlan", "plan": "US-FT-Medical-Dental-Vision"}
+{"associate_id": "A1001", "rel": "SUBJECT_TO", "from": "Associate", "to": "LeaveRule", "rule": "US-Medical-Leave-Unpaid-Coding"}
+{"associate_id": "A1001", "rel": "GOVERNED_BY", "from": "BenefitsPlan", "to": "Policy", "policy": "benefits_eligibility"}
+{"associate_id": "A1001", "rel": "REFERENCES", "from": "LeaveRule", "to": "Policy", "policy": "leave_fmla"}
+{"associate_id": "A1001", "rel": "REFERENCES", "from": "LeaveRule", "to": "Policy", "policy": "payroll_discrepancy"}
+{"associate_id": "A2002", "rel": "HAS_ROLE", "from": "Associate", "to": "Role", "role": "FC Associate"}
+{"associate_id": "A2002", "rel": "SUBJECT_TO", "from": "Associate", "to": "LeaveRule", "rule": "CA-Sick-Leave-Overlay"}

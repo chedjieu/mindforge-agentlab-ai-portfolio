@@ -1,0 +1,39 @@
+# Env
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+
+# Caches
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+.basedpyright/
+
+# Local DB / runtime state
+checkpoints.sqlite
+*.db
+*.sqlite
+*.sqlite3
+
+# Large / generated binaries (download or build locally)
+**/bin/cloud-sql-proxy.exe
+**/.bedrock_agentcore/
+**/dependencies.zip
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.cursor/
+
+# Logs
+*.log
+.langsmith/

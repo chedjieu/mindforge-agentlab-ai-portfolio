@@ -1,0 +1,25 @@
+services:
+  neo4j:
+    image: neo4j:5.25-community
+    ports:
+      - "7475:7474"
+      - "7688:7687"
+    environment:
+      NEO4J_AUTH: neo4j/password
+    volumes:
+      - adviseguard_neo4j:/data
+
+  postgres:
+    image: pgvector/pgvector:pg16
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: adviseguard
+    volumes:
+      - adviseguard_pg:/var/lib/postgresql/data
+
+volumes:
+  adviseguard_neo4j:
+  adviseguard_pg:

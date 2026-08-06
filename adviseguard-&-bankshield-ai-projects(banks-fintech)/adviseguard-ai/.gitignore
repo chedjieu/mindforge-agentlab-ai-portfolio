@@ -1,0 +1,17 @@
+.env
+.venv/
+.cursor/
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.ruff_cache/
+checkpoints.sqlite
+data/chroma/
+data/published_responses.log
+data/hitl_outcomes.jsonl
+*.log
+.DS_Store
+.env.deployed
+# uv.lock is committed for reproducible builds

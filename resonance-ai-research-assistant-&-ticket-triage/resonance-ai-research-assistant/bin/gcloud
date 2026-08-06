@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Repo-local gcloud wrapper for Git Bash (Windows PATH breaks on "Cloud SDK" space).
+set -euo pipefail
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# shellcheck source=../scripts/_gcloud_path.sh
+source "$ROOT/scripts/_gcloud_path.sh"
+ensure_gcloud_on_path || {
+    echo "gcloud not found. Install: https://cloud.google.com/sdk/docs/install" >&2
+    exit 1
+}
+exec gcloud "$@"

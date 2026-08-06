@@ -1,0 +1,194 @@
+{
+  "alerts": [
+    {
+      "alert_id": "ALT-FRAUD-001",
+      "demo_gold": "fraud",
+      "customer_id": "CUST-1001",
+      "description": "Suspicious high-value wire to new beneficiary with shared device",
+      "payment_rail": "wire",
+      "amount": 42000,
+      "velocity_1h": 4,
+      "avg_amount_30d": 500,
+      "new_beneficiary": true,
+      "behavior_anomaly": 0.8,
+      "device_id": "DEV-SHARED-77",
+      "beneficiary_country": "US"
+    },
+    {
+      "alert_id": "ALT-LOW-001",
+      "customer_id": "CUST-2002",
+      "description": "Recurring ACH payroll within historical norms",
+      "payment_rail": "ach",
+      "amount": 3200,
+      "velocity_1h": 1,
+      "avg_amount_30d": 3200,
+      "new_beneficiary": false,
+      "behavior_anomaly": 0.05
+    },
+    {
+      "alert_id": "ALT-VAR-001",
+      "customer_id": "CUST-9001",
+      "description": "Synthetic txn variant 1 for queue coverage",
+      "payment_rail": "card",
+      "amount": 920,
+      "velocity_1h": 2,
+      "avg_amount_30d": 200,
+      "new_beneficiary": false,
+      "behavior_anomaly": 0.1
+    },
+    {
+      "alert_id": "ALT-VAR-002",
+      "customer_id": "CUST-9002",
+      "description": "Synthetic txn variant 2 for queue coverage",
+      "payment_rail": "ach",
+      "amount": 1040,
+      "velocity_1h": 3,
+      "avg_amount_30d": 200,
+      "new_beneficiary": false,
+      "behavior_anomaly": 0.2
+    },
+    {
+      "alert_id": "ALT-VAR-003",
+      "customer_id": "CUST-9003",
+      "description": "Synthetic txn variant 3 for queue coverage",
+      "payment_rail": "card",
+      "amount": 1160,
+      "velocity_1h": 1,
+      "avg_amount_30d": 200,
+      "new_beneficiary": false,
+      "behavior_anomaly": 0.30000000000000004
+    },
+    {
+      "alert_id": "ALT-VAR-004",
+      "customer_id": "CUST-9004",
+      "description": "Synthetic txn variant 4 for queue coverage",
+      "payment_rail": "ach",
+      "amount": 1280,
+      "velocity_1h": 2,
+      "avg_amount_30d": 200,
+      "new_beneficiary": true,
+      "behavior_anomaly": 0.4
+    },
+    {
+      "alert_id": "ALT-VAR-005",
+      "customer_id": "CUST-9005",
+      "description": "Synthetic txn variant 5 for queue coverage",
+      "payment_rail": "card",
+      "amount": 1400,
+      "velocity_1h": 3,
+      "avg_amount_30d": 200,
+      "new_beneficiary": false,
+      "behavior_anomaly": 0.5
+    },
+    {
+      "alert_id": "ALT-VAR-006",
+      "customer_id": "CUST-9006",
+      "description": "Synthetic txn variant 6 for queue coverage",
+      "payment_rail": "ach",
+      "amount": 1520,
+      "velocity_1h": 1,
+      "avg_amount_30d": 200,
+      "new_beneficiary": false,
+      "behavior_anomaly": 0.6000000000000001
+    },
+    {
+      "alert_id": "ALT-VAR-007",
+      "customer_id": "CUST-9007",
+      "description": "Synthetic txn variant 7 for queue coverage",
+      "payment_rail": "card",
+      "amount": 1640,
+      "velocity_1h": 2,
+      "avg_amount_30d": 200,
+      "new_beneficiary": false,
+      "behavior_anomaly": 0.7000000000000001
+    },
+    {
+      "alert_id": "ALT-VAR-008",
+      "customer_id": "CUST-9008",
+      "description": "Synthetic txn variant 8 for queue coverage",
+      "payment_rail": "ach",
+      "amount": 1760,
+      "velocity_1h": 3,
+      "avg_amount_30d": 200,
+      "new_beneficiary": true,
+      "behavior_anomaly": 0.8
+    },
+    {
+      "alert_id": "ALT-VAR-009",
+      "customer_id": "CUST-9009",
+      "description": "Synthetic txn variant 9 for queue coverage",
+      "payment_rail": "card",
+      "amount": 1880,
+      "velocity_1h": 1,
+      "avg_amount_30d": 200,
+      "new_beneficiary": false,
+      "behavior_anomaly": 0.9
+    },
+    {
+      "alert_id": "ALT-VAR-010",
+      "customer_id": "CUST-9010",
+      "description": "Synthetic txn variant 10 for queue coverage",
+      "payment_rail": "ach",
+      "amount": 2000,
+      "velocity_1h": 2,
+      "avg_amount_30d": 200,
+      "new_beneficiary": false,
+      "behavior_anomaly": 0.9
+    },
+    {
+      "alert_id": "ALT-VAR-011",
+      "customer_id": "CUST-9011",
+      "description": "Synthetic txn variant 11 for queue coverage",
+      "payment_rail": "card",
+      "amount": 2120,
+      "velocity_1h": 3,
+      "avg_amount_30d": 200,
+      "new_beneficiary": false,
+      "behavior_anomaly": 0.9
+    },
+    {
+      "alert_id": "ALT-VAR-012",
+      "customer_id": "CUST-9012",
+      "description": "Synthetic txn variant 12 for queue coverage",
+      "payment_rail": "ach",
+      "amount": 2240,
+      "velocity_1h": 1,
+      "avg_amount_30d": 200,
+      "new_beneficiary": true,
+      "behavior_anomaly": 0.9
+    },
+    {
+      "alert_id": "ALT-VAR-013",
+      "customer_id": "CUST-9013",
+      "description": "Synthetic txn variant 13 for queue coverage",
+      "payment_rail": "card",
+      "amount": 2360,
+      "velocity_1h": 2,
+      "avg_amount_30d": 200,
+      "new_beneficiary": false,
+      "behavior_anomaly": 0.9
+    },
+    {
+      "alert_id": "ALT-VAR-014",
+      "customer_id": "CUST-9014",
+      "description": "Synthetic txn variant 14 for queue coverage",
+      "payment_rail": "ach",
+      "amount": 2480,
+      "velocity_1h": 3,
+      "avg_amount_30d": 200,
+      "new_beneficiary": false,
+      "behavior_anomaly": 0.9
+    },
+    {
+      "alert_id": "ALT-VAR-015",
+      "customer_id": "CUST-9015",
+      "description": "Synthetic txn variant 15 for queue coverage",
+      "payment_rail": "card",
+      "amount": 2600,
+      "velocity_1h": 1,
+      "avg_amount_30d": 200,
+      "new_beneficiary": false,
+      "behavior_anomaly": 0.9
+    }
+  ]
+}

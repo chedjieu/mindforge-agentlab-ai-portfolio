@@ -1,0 +1,10 @@
+{"rel": "REQUIRES_STEP_THERAPY", "from": "drug-ada", "to": "pol-step", "from_name": "adalimumab", "to_name": "step therapy biologics"}
+{"rel": "COVERED_BY", "from": "svc-mri", "to": "pol-step", "from_name": "mri_lumbar", "note": "medical necessity policy"}
+{"rel": "BILLED_AS", "from": "clm-001", "to": "prov-77", "from_name": "CLM-001", "to_name": "PRV-77"}
+{"rel": "GUIDELINE_FOR", "from": "guide-ada", "to": "cond-t2dm", "from_name": "diabetes CKD guideline", "to_name": "Type 2 diabetes"}
+{"rel": "HAS_CONDITION", "from": "pat-m100", "to": "cond-t2dm", "from_name": "M100", "to_name": "Type 2 diabetes"}
+{"rel": "SIMILAR_CLAIM", "from": "clm-001", "to": "prov-77", "note": "community anomaly cluster"}
+{"rel": "PA-MRI-001", "from": "PA-MRI-001", "to": "svc-mri", "rel_type": "REQUESTS"}
+{"rel": "REQUESTS", "from": "PA-MRI-001", "to": "svc-mri", "from_name": "PA-MRI-001", "to_name": "mri_lumbar"}
+{"rel": "FRD-001", "from": "FRD-001", "to": "prov-77", "note": "investigation link"}
+{"rel": "INVESTIGATES", "from": "FRD-001", "to": "prov-77", "from_name": "FRD-001", "to_name": "PRV-77"}

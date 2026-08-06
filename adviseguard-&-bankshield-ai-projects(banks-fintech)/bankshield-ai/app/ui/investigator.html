@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BankShield AI — Investigator Console</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>BankShield AI</h1>
+      <p class="sub">Fraud investigation · Hybrid RAG · GraphRAG · Human-in-the-loop</p>
+    </div>
+    <div class="actions">
+      <button id="btn-demo">Demo Mule</button>
+      <button id="btn-sanctions" class="secondary">Demo Sanctions</button>
+      <button id="btn-refresh" class="secondary">Refresh</button>
+    </div>
+  </header>
+
+  <main class="grid">
+    <section class="panel">
+      <h2>Alert queue</h2>
+      <div id="alerts" class="list"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Threads</h2>
+      <div id="threads" class="list"></div>
+    </section>
+
+    <section class="panel wide">
+      <h2>Pending HITL approvals</h2>
+      <div id="pending" class="list"></div>
+    </section>
+
+    <section class="panel wide">
+      <h2>Case detail</h2>
+      <pre id="case" class="case">Select a thread to inspect evidence, graph paths, citations, and SAR draft.</pre>
+    </section>
+  </main>
+
+  <script>
+    async function loadAlerts() {
+      const res = await fetch('/alerts');
+      const alerts = await res.json();
+      const el = document.getElementById('alerts');
+      el.innerHTML = alerts.map(a => `
+        <article class="card">
+          <strong>${a.alert_id}</strong> · ${a.payment_rail || '?'} · $${a.amount || 0}
+          <div class="muted">${(a.description || '').slice(0, 140)}</div>
+          <button data-id="${a.alert_id}">Investigate</button>
+        </article>
+      `).join('') || '<p class="muted">No alerts — run generate_synthetic_bank_data</p>';
+      el.querySelectorAll('button[data-id]').forEach(btn => {
+        btn.onclick = async () => {
+          await fetch('/investigate', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({alert_id: btn.dataset.id})
+          });
+          setTimeout(refresh, 800);
+        };
+      });
+    }
+
+    async function loadThreads() {
+      const res = await fetch('/threads');
+      const threads = await res.json();
+      const el = document.getElementById('threads');
+      el.innerHTML = threads.slice().reverse().map(t => `
+        <article class="card">
+          <strong>${t.case_id || t.thread_id.slice(0,8)}</strong>
+          <span class="pill">${t.status}</span>
+          ${t.risk_band ? `<span class="pill risk">${t.risk_band}</span>` : ''}
+          <div class="muted">${t.query || ''}</div>
+          <button data-thread="${t.thread_id}">Open</button>
+        </article>
+      `).join('') || '<p class="muted">No threads yet</p>';
+      el.querySelectorAll('button[data-thread]').forEach(btn => {
+        btn.onclick = () => openCase(btn.dataset.thread);
+      });
+    }
+
+    async function loadPending() {
+      const res = await fetch('/pending');
+      const items = await res.json();
+      const el = document.getElementById('pending');
+      el.innerHTML = items.map(item => {
+        const p = item.payload || {};
+        const rec = p.recommendation || {};
+        return `
+          <article class="card hitl">
+            <strong>${p.case_id || item.thread_id}</strong>
+            <span class="pill risk">${p.risk_band || '?'} (${p.risk_score ?? '?'})</span>
+            <div>${rec.summary || 'No summary'}</div>
+            <div class="muted">Grounding: ${p.grounding_score ?? 'n/a'} · Types: ${(p.fraud_types || []).join(', ')}</div>
+            <div class="row">
+              <button data-approve="${item.thread_id}">Approve</button>
+              <button class="secondary" data-reject="${item.thread_id}">Reject</button>
+            </div>
+            <textarea id="edit-${item.thread_id}" placeholder="Optional edit to recommendation summary before approve"></textarea>
+            <button class="secondary" data-edit="${item.thread_id}">Edit & Approve</button>
+          </article>
+        `;
+      }).join('') || '<p class="muted">No pending approvals</p>';
+
+      el.querySelectorAll('[data-approve]').forEach(btn => {
+        btn.onclick = () => decide(btn.dataset.approve, 'approve');
+      });
+      el.querySelectorAll('[data-reject]').forEach(btn => {
+        btn.onclick = () => decide(btn.dataset.reject, 'reject');
+      });
+      el.querySelectorAll('[data-edit]').forEach(btn => {
+        btn.onclick = () => {
+          const body = document.getElementById('edit-' + btn.dataset.edit).value;
+          decide(btn.dataset.edit, 'edit', body);
+        };
+      });
+    }
+
+    async function decide(threadId, action, edited_body=null) {
+      await fetch('/approve/' + threadId, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({action, edited_body})
+      });
+      setTimeout(refresh, 900);
+    }
+
+    async function openCase(threadId) {
+      const res = await fetch('/case/' + threadId);
+      if (!res.ok) {
+        document.getElementById('case').textContent = 'Case not ready';
+        return;
+      }
+      const data = await res.json();
+      document.getElementById('case').textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function refresh() {
+      await Promise.all([loadAlerts(), loadThreads(), loadPending()]);
+    }
+
+    document.getElementById('btn-demo').onclick = async () => {
+      await fetch('/investigate/demo', {method: 'POST'});
+      setTimeout(refresh, 800);
+    };
+    document.getElementById('btn-sanctions').onclick = async () => {
+      await fetch('/investigate/demo-sanctions', {method: 'POST'});
+      setTimeout(refresh, 800);
+    };
+    document.getElementById('btn-refresh').onclick = refresh;
+
+    refresh();
+    setInterval(refresh, 4000);
+  </script>
+</body>
+</html>

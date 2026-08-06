@@ -1,0 +1,372 @@
+{
+  "alerts": [
+    {
+      "alert_id": "ALT-MULE-001",
+      "case_id": "CASE-MULE-001",
+      "demo_gold": "mule",
+      "alert_type": "wire_mule_network",
+      "description": "High-value outbound wire $48,500 to new beneficiary with shared device and IP reuse across three newly opened accounts \u2014 suspected mule ring.",
+      "customer_id": "CUST-1001",
+      "customer_name": "Alex Rivera",
+      "payment_rail": "wire",
+      "amount": 48500,
+      "beneficiary": "BEN-9001",
+      "beneficiary_name": "QuickCash Disbursements LLC",
+      "beneficiary_country": "US",
+      "device_id": "DEV-SHARED-77",
+      "ip": "203.0.113.44",
+      "phone": "+1-555-0144",
+      "velocity_1h": 4,
+      "velocity_24h": 11,
+      "avg_amount_30d": 420,
+      "new_beneficiary": true,
+      "night_owl": true,
+      "behavior_anomaly": 0.82,
+      "ml_score": 0.88,
+      "fraud_types": [
+        "wire",
+        "mule"
+      ],
+      "needs_graph": true,
+      "tags": [
+        "wire",
+        "mule"
+      ]
+    },
+    {
+      "alert_id": "ALT-OFAC-001",
+      "case_id": "CASE-OFAC-001",
+      "demo_gold": "sanctions",
+      "alert_type": "sanctions_near_match",
+      "description": "Wire to beneficiary name near-matching OFAC SDN fixture entry 'Vladimir Petroski' / ShellTrade Ltd \u2014 sanctions screening required.",
+      "customer_id": "CUST-2002",
+      "customer_name": "Jordan Lee",
+      "payment_rail": "wire",
+      "amount": 125000,
+      "beneficiary": "BEN-OFAC-1",
+      "beneficiary_name": "Vladimir Petroski",
+      "beneficiary_country": "CY",
+      "device_id": "DEV-2002",
+      "ip": "198.51.100.10",
+      "phone": "+1-555-0202",
+      "velocity_1h": 1,
+      "velocity_24h": 2,
+      "avg_amount_30d": 8000,
+      "new_beneficiary": true,
+      "ml_score": 0.79,
+      "fraud_types": [
+        "sanctions",
+        "wire",
+        "aml"
+      ],
+      "needs_graph": true,
+      "tags": [
+        "sanctions",
+        "ofac",
+        "aml"
+      ]
+    },
+    {
+      "alert_id": "ALT-ACH-001",
+      "case_id": "CASE-ACH-001",
+      "alert_type": "ach_velocity",
+      "description": "ACH debit burst: 9 transfers in 24h totaling $62,000 vs $900 average.",
+      "customer_id": "CUST-3003",
+      "customer_name": "Sam Patel",
+      "payment_rail": "ach",
+      "amount": 9200,
+      "beneficiary": "BEN-ACH-3",
+      "beneficiary_name": "Payroll Overflow Inc",
+      "beneficiary_country": "US",
+      "velocity_1h": 3,
+      "velocity_24h": 9,
+      "avg_amount_30d": 900,
+      "new_beneficiary": true,
+      "ml_score": 0.71,
+      "fraud_types": [
+        "ach"
+      ],
+      "needs_graph": true,
+      "tags": [
+        "ach"
+      ]
+    },
+    {
+      "alert_id": "ALT-CARD-001",
+      "case_id": "CASE-CARD-001",
+      "alert_type": "card_cnr",
+      "description": "Card-not-present spend spike at electronics merchant overseas.",
+      "customer_id": "CUST-4004",
+      "customer_name": "Riley Chen",
+      "payment_rail": "card",
+      "amount": 2400,
+      "merchant": "ElectroMart RO",
+      "beneficiary_country": "RO",
+      "velocity_1h": 5,
+      "velocity_24h": 7,
+      "avg_amount_30d": 85,
+      "behavior_anomaly": 0.7,
+      "ml_score": 0.66,
+      "fraud_types": [
+        "card"
+      ],
+      "tags": [
+        "card"
+      ]
+    },
+    {
+      "alert_id": "ALT-ATO-001",
+      "case_id": "CASE-ATO-001",
+      "alert_type": "account_takeover",
+      "description": "Password reset + new device + beneficiary add within 12 minutes.",
+      "customer_id": "CUST-5005",
+      "customer_name": "Morgan Blake",
+      "payment_rail": "wire",
+      "amount": 15000,
+      "device_id": "DEV-NEW-99",
+      "ip": "192.0.2.55",
+      "new_beneficiary": true,
+      "behavior_anomaly": 0.91,
+      "ml_score": 0.84,
+      "fraud_types": [
+        "ato",
+        "wire"
+      ],
+      "needs_graph": true,
+      "tags": [
+        "ato"
+      ]
+    },
+    {
+      "alert_id": "ALT-BEC-001",
+      "case_id": "CASE-BEC-001",
+      "alert_type": "app_bec",
+      "description": "Business email compromise: CFO impersonation requesting urgent vendor wire.",
+      "customer_id": "CUST-6006",
+      "customer_name": "Northwind Manufacturing AP",
+      "payment_rail": "wire",
+      "amount": 275000,
+      "beneficiary_name": "Global Parts Settlement",
+      "new_beneficiary": true,
+      "ml_score": 0.77,
+      "fraud_types": [
+        "app_bec",
+        "wire"
+      ],
+      "tags": [
+        "bec",
+        "app"
+      ]
+    },
+    {
+      "alert_id": "ALT-RTP-001",
+      "case_id": "CASE-RTP-001",
+      "alert_type": "instant_pay",
+      "description": "FedNow instant payment $7,800 to first-time payee after phishing report.",
+      "customer_id": "CUST-7007",
+      "customer_name": "Casey Nguyen",
+      "payment_rail": "fednow",
+      "amount": 7800,
+      "new_beneficiary": true,
+      "ml_score": 0.69,
+      "fraud_types": [
+        "instant_pay"
+      ],
+      "tags": [
+        "fednow",
+        "rtp"
+      ]
+    },
+    {
+      "alert_id": "ALT-LOW-001",
+      "case_id": "CASE-LOW-001",
+      "alert_type": "false_positive_candidate",
+      "description": "Recurring ACH payroll to known employer within historical norms.",
+      "customer_id": "CUST-8008",
+      "customer_name": "Taylor Brooks",
+      "payment_rail": "ach",
+      "amount": 3200,
+      "velocity_1h": 1,
+      "velocity_24h": 1,
+      "avg_amount_30d": 3200,
+      "new_beneficiary": false,
+      "ml_score": 0.18,
+      "behavior_anomaly": 0.05,
+      "fraud_types": [
+        "ach"
+      ],
+      "tags": [
+        "ach",
+        "payroll"
+      ]
+    },
+    {
+      "alert_id": "ALT-VAR-001",
+      "case_id": "CASE-VAR-001",
+      "alert_type": "card",
+      "description": "Card geolocation mismatch (synthetic variant 1).",
+      "customer_id": "CUST-9001",
+      "customer_name": "Synthetic User 1",
+      "payment_rail": "card",
+      "amount": 1500,
+      "velocity_1h": 2,
+      "velocity_24h": 3,
+      "avg_amount_30d": 200,
+      "ml_score": 0.41,
+      "fraud_types": [
+        "card"
+      ],
+      "needs_graph": false,
+      "tags": [
+        "card"
+      ]
+    },
+    {
+      "alert_id": "ALT-VAR-002",
+      "case_id": "CASE-VAR-002",
+      "alert_type": "ato",
+      "description": "Session anomaly after SIM swap (synthetic variant 2).",
+      "customer_id": "CUST-9002",
+      "customer_name": "Synthetic User 2",
+      "payment_rail": "internal",
+      "amount": 2500,
+      "velocity_1h": 3,
+      "velocity_24h": 4,
+      "avg_amount_30d": 200,
+      "ml_score": 0.47,
+      "fraud_types": [
+        "ato"
+      ],
+      "needs_graph": false,
+      "tags": [
+        "ato"
+      ]
+    },
+    {
+      "alert_id": "ALT-VAR-003",
+      "case_id": "CASE-VAR-003",
+      "alert_type": "aml",
+      "description": "Structuring pattern just under CTR threshold (synthetic variant 3).",
+      "customer_id": "CUST-9003",
+      "customer_name": "Synthetic User 3",
+      "payment_rail": "ach",
+      "amount": 3500,
+      "velocity_1h": 4,
+      "velocity_24h": 5,
+      "avg_amount_30d": 200,
+      "ml_score": 0.53,
+      "fraud_types": [
+        "aml"
+      ],
+      "needs_graph": true,
+      "tags": [
+        "aml"
+      ]
+    },
+    {
+      "alert_id": "ALT-VAR-004",
+      "case_id": "CASE-VAR-004",
+      "alert_type": "app_bec",
+      "description": "Invoice redirect scam (synthetic variant 4).",
+      "customer_id": "CUST-9004",
+      "customer_name": "Synthetic User 4",
+      "payment_rail": "wire",
+      "amount": 4500,
+      "velocity_1h": 1,
+      "velocity_24h": 6,
+      "avg_amount_30d": 200,
+      "ml_score": 0.59,
+      "fraud_types": [
+        "app_bec"
+      ],
+      "needs_graph": false,
+      "tags": [
+        "app_bec"
+      ]
+    },
+    {
+      "alert_id": "ALT-VAR-005",
+      "case_id": "CASE-VAR-005",
+      "alert_type": "instant_pay",
+      "description": "RTP romance scam indicator (synthetic variant 5).",
+      "customer_id": "CUST-9005",
+      "customer_name": "Synthetic User 5",
+      "payment_rail": "rtp",
+      "amount": 5500,
+      "velocity_1h": 2,
+      "velocity_24h": 7,
+      "avg_amount_30d": 200,
+      "ml_score": 0.6499999999999999,
+      "fraud_types": [
+        "instant_pay"
+      ],
+      "needs_graph": false,
+      "tags": [
+        "instant_pay"
+      ]
+    },
+    {
+      "alert_id": "ALT-VAR-006",
+      "case_id": "CASE-VAR-006",
+      "alert_type": "mule",
+      "description": "Funnel account inbound then outbound ACH (synthetic variant 6).",
+      "customer_id": "CUST-9006",
+      "customer_name": "Synthetic User 6",
+      "payment_rail": "ach",
+      "amount": 6500,
+      "velocity_1h": 3,
+      "velocity_24h": 8,
+      "avg_amount_30d": 200,
+      "ml_score": 0.71,
+      "fraud_types": [
+        "mule"
+      ],
+      "needs_graph": true,
+      "tags": [
+        "mule"
+      ]
+    },
+    {
+      "alert_id": "ALT-VAR-007",
+      "case_id": "CASE-VAR-007",
+      "alert_type": "wire",
+      "description": "Cross-border wire layering attempt (synthetic variant 7).",
+      "customer_id": "CUST-9007",
+      "customer_name": "Synthetic User 7",
+      "payment_rail": "wire",
+      "amount": 7500,
+      "velocity_1h": 4,
+      "velocity_24h": 9,
+      "avg_amount_30d": 200,
+      "ml_score": 0.77,
+      "fraud_types": [
+        "wire"
+      ],
+      "needs_graph": true,
+      "tags": [
+        "wire"
+      ]
+    },
+    {
+      "alert_id": "ALT-VAR-008",
+      "case_id": "CASE-VAR-008",
+      "alert_type": "sanctions",
+      "description": "Country risk escalation review (synthetic variant 8).",
+      "customer_id": "CUST-9008",
+      "customer_name": "Synthetic User 8",
+      "payment_rail": "wire",
+      "amount": 8500,
+      "velocity_1h": 1,
+      "velocity_24h": 10,
+      "avg_amount_30d": 200,
+      "ml_score": 0.83,
+      "fraud_types": [
+        "sanctions"
+      ],
+      "needs_graph": true,
+      "tags": [
+        "sanctions"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+"""BankShield tool adapters."""

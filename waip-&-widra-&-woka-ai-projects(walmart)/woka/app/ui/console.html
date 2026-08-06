@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WOKA Knowledge Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b1f33;
+      --panel: #12324d;
+      --ink: #f4f7fb;
+      --muted: #9db0c3;
+      --accent: #ffc220;
+      --walmart: #0071ce;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "DM Sans", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, #1a4d7a 0%, transparent 55%),
+        radial-gradient(900px 500px at 100% 0%, #0e3a5c 0%, transparent 50%),
+        linear-gradient(180deg, #071525, #0b1f33 40%, #0a1828);
+    }
+    header {
+      padding: 1.5rem 2rem 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 1rem;
+    }
+    .brand { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; }
+    .brand span { color: var(--accent); }
+    .tag { color: var(--muted); font-size: 0.95rem; max-width: 42rem; }
+    main {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 1rem;
+      padding: 1rem 2rem 2rem;
+    }
+    @media (max-width: 960px) { main { grid-template-columns: 1fr; } }
+    .card {
+      background: color-mix(in srgb, var(--panel) 88%, black);
+      border: 1px solid #234866;
+      border-radius: 14px;
+      padding: 1rem 1.1rem;
+      box-shadow: 0 10px 40px rgba(0,0,0,.25);
+    }
+    label { display: block; font-size: 0.8rem; color: var(--muted); margin-bottom: 0.35rem; }
+    select, textarea, input, button {
+      width: 100%;
+      font: inherit;
+      border-radius: 10px;
+      border: 1px solid #2d5a7a;
+      background: #0c2438;
+      color: var(--ink);
+      padding: 0.7rem 0.8rem;
+    }
+    textarea { min-height: 120px; resize: vertical; }
+    .row { display: flex; gap: 0.6rem; margin-top: 0.75rem; flex-wrap: wrap; }
+    .row > * { flex: 1; min-width: 8rem; }
+    button {
+      cursor: pointer;
+      background: linear-gradient(180deg, #0b78d1, var(--walmart));
+      border: none;
+      font-weight: 600;
+    }
+    button.secondary { background: #1b3d57; }
+    pre, .mono {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.78rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .answer {
+      line-height: 1.5;
+      background: #0a2033;
+      border-radius: 10px;
+      padding: 0.9rem;
+      border-left: 4px solid var(--accent);
+      min-height: 8rem;
+    }
+    .pill {
+      display: inline-block;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      background: #1c4b6e;
+      color: var(--accent);
+      font-size: 0.75rem;
+      margin: 0.15rem 0.2rem 0 0;
+    }
+    h2 { margin: 0 0 0.75rem; font-size: 1rem; }
+    .muted { color: var(--muted); }
+    .log { max-height: 14rem; overflow: auto; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <div class="brand">WOKA <span>Knowledge Console</span></div>
+      <div class="tag">Supply-chain UC-1 — LangGraph supervisor fans retrieval, SQL, and internet agents into a cited answer.</div>
+    </div>
+    <div class="muted mono">:8006 · Phase 6</div>
+  </header>
+  <main>
+    <section class="card">
+      <h2>Ask WOKA</h2>
+      <div class="row">
+        <div>
+          <label for="role">Role</label>
+          <select id="role">
+            <option value="analyst" selected>analyst</option>
+            <option value="manager">manager</option>
+            <option value="associate">associate</option>
+          </select>
+        </div>
+        <div>
+          <label for="department">Department</label>
+          <select id="department">
+            <option value="Supply Chain" selected>Supply Chain</option>
+            <option value="Store Ops">Store Ops</option>
+            <option value="Legal">Legal</option>
+          </select>
+        </div>
+        <div>
+          <label for="region">Region</label>
+          <select id="region">
+            <option value="SE" selected>SE</option>
+            <option value="US">US</option>
+            <option value="NE">NE</option>
+          </select>
+        </div>
+      </div>
+      <label for="query" style="margin-top:0.75rem">Question</label>
+      <textarea id="query">Hurricane closed DCs in the Southeast. Which suppliers are affected, which products are delayed, what inventory exists within 300 miles, which contracts allow alternate sourcing, and which stores will stock out within 48 hours?</textarea>
+      <div class="row">
+        <button id="askBtn">Run UC-1 graph</button>
+        <button class="secondary" id="streamBtn">Stream steps</button>
+        <button class="secondary" id="demoBtn">Load golden query</button>
+      </div>
+      <h2 style="margin-top:1.2rem">Answer</h2>
+      <div id="answer" class="answer muted">Submit the golden hurricane query to orchestrate parallel agents.</div>
+      <div id="meta" style="margin-top:0.75rem"></div>
+    </section>
+    <section class="card">
+      <h2>Citations / Trace</h2>
+      <pre id="citations" class="muted">—</pre>
+      <h2 style="margin-top:1.2rem">Step log</h2>
+      <pre id="trace" class="muted log">—</pre>
+    </section>
+  </main>
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const GOLDEN =
+      "Hurricane closed DCs in the Southeast. Which suppliers are affected, which products are delayed, what inventory exists within 300 miles, which contracts allow alternate sourcing, and which stores will stock out within 48 hours?";
+
+    function body() {
+      return {
+        query: $("query").value,
+        user_id: "user-sc-001",
+        role: $("role").value,
+        department: $("department").value,
+        region: $("region").value,
+      };
+    }
+
+    function render(data) {
+      $("answer").textContent = data.answer || "—";
+      $("answer").classList.remove("muted");
+      const agents = (data.agents_used || []).map(a => `<span class="pill">${a}</span>`).join("");
+      $("meta").innerHTML =
+        `${agents}<div class="muted" style="margin-top:0.5rem">status=${data.status} · confidence=${data.confidence} · model=${data.model}</div>`;
+      $("citations").textContent = JSON.stringify(data.citations || [], null, 2);
+      $("trace").textContent = JSON.stringify({
+        step_log: data.step_log || [],
+        note: data.note || "",
+      }, null, 2);
+    }
+
+    async function ask() {
+      $("answer").textContent = "Running firewall → security → parallel workers → compliance…";
+      $("answer").classList.add("muted");
+      const res = await fetch("/chat", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(body()),
+      });
+      render(await res.json());
+    }
+
+    async function streamAsk() {
+      $("answer").textContent = "Streaming graph events…";
+      $("answer").classList.add("muted");
+      $("trace").textContent = "";
+      const res = await fetch("/chat/stream", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(body()),
+      });
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buf = "";
+      let final = null;
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        buf += decoder.decode(value, { stream: true });
+        const parts = buf.split("\n\n");
+        buf = parts.pop() || "";
+        for (const block of parts) {
+          const line = block.split("\n").find(l => l.startsWith("data: "));
+          if (!line) continue;
+          const evt = JSON.parse(line.slice(6));
+          if (evt.type === "step") {
+            $("trace").textContent += `${evt.node}: ${JSON.stringify(evt.keys)}\n`;
+          } else if (evt.type === "final") {
+            final = evt;
+          }
+        }
+      }
+      if (final) render(final);
+    }
+
+    $("askBtn").onclick = ask;
+    $("streamBtn").onclick = streamAsk;
+    $("demoBtn").onclick = () => { $("query").value = GOLDEN; };
+  </script>
+</body>
+</html>

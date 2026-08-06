@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AdviseGuard — Customer</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>AdviseGuard AI</h1>
+      <p class="sub">Personalized advice · Support · <a href="/ops">Employee ops →</a></p>
+    </div>
+    <div class="actions">
+      <button id="btn-demo">Demo Advice</button>
+      <button id="btn-refresh" class="secondary">Refresh</button>
+    </div>
+  </header>
+  <main class="grid">
+    <section class="panel">
+      <h2>Ask</h2>
+      <input id="customer" value="CUST-1001" placeholder="customer_id" />
+      <textarea id="query" placeholder="Ask for advice or support...">I want investment advice for retirement with moderate risk.</textarea>
+      <div class="row" style="margin-top:0.5rem">
+        <button id="btn-ask">Submit</button>
+      </div>
+    </section>
+    <section class="panel">
+      <h2>Threads</h2>
+      <div id="threads" class="list"></div>
+    </section>
+    <section class="panel wide">
+      <h2>Pending approvals</h2>
+      <div id="pending" class="list"></div>
+    </section>
+    <section class="panel wide">
+      <h2>Response detail</h2>
+      <pre id="case" class="case">Submit a question to see the grounded response pack.</pre>
+    </section>
+  </main>
+  <script>
+    async function refresh() {
+      const threads = await (await fetch('/threads')).json();
+      document.getElementById('threads').innerHTML = threads.slice().reverse().map(t => `
+        <article class="card">
+          <strong>${t.customer_id || ''}</strong>
+          <span class="pill">${t.status}</span>
+          ${t.risk_band ? `<span class="pill risk">${t.risk_band}</span>` : ''}
+          <div class="muted">${t.query || ''}</div>
+          <button data-t="${t.thread_id}">Open</button>
+        </article>`).join('') || '<p class="muted">No threads</p>';
+      document.querySelectorAll('[data-t]').forEach(b => b.onclick = () => openCase(b.dataset.t));
+
+      const pending = await (await fetch('/pending')).json();
+      document.getElementById('pending').innerHTML = pending.map(item => {
+        const p = item.payload || {};
+        const fr = p.final_response || {};
+        return `<article class="card">
+          <strong>${p.customer_id || item.thread_id}</strong>
+          <span class="pill risk">${p.risk_band || '?'}</span>
+          <div>${(fr.summary || '').slice(0, 220)}</div>
+          <div class="row">
+            <button data-a="${item.thread_id}">Approve</button>
+            <button class="secondary" data-r="${item.thread_id}">Reject</button>
+          </div>
+        </article>`;
+      }).join('') || '<p class="muted">No pending HITL</p>';
+      document.querySelectorAll('[data-a]').forEach(b => b.onclick = () => decide(b.dataset.a, 'approve'));
+      document.querySelectorAll('[data-r]').forEach(b => b.onclick = () => decide(b.dataset.r, 'reject'));
+    }
+    async function openCase(id) {
+      const data = await (await fetch('/case/' + id)).json();
+      document.getElementById('case').textContent = JSON.stringify(data, null, 2);
+    }
+    async function decide(id, action) {
+      await fetch('/approve/' + id, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({action})});
+      setTimeout(refresh, 900);
+    }
+    document.getElementById('btn-ask').onclick = async () => {
+      await fetch('/ask', {method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({query: document.getElementById('query').value, customer_id: document.getElementById('customer').value})});
+      setTimeout(refresh, 800);
+    };
+    document.getElementById('btn-demo').onclick = async () => {
+      await fetch('/ask/demo-advice', {method:'POST'});
+      setTimeout(refresh, 800);
+    };
+    document.getElementById('btn-refresh').onclick = refresh;
+    refresh(); setInterval(refresh, 4000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "case_id": "POP-001",
+  "title": "Diabetes cohort risk",
+  "summary": "Moderate-high population risk member",
+  "risk_score": 0.72,
+  "actions": ["Close A1C care gap", "Pharmacy adherence outreach", "PCP appointment"]
+}

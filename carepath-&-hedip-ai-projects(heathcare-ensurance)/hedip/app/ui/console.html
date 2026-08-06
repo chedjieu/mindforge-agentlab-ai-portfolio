@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HEDIP Command Center</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>HEDIP</h1>
+      <p class="sub">Healthcare Decision Intelligence Platform · :8009</p>
+    </div>
+  </header>
+  <main class="grid">
+    <section class="panel">
+      <h2>Domains</h2>
+      <div id="domains" class="list"></div>
+      <h3>Cases</h3>
+      <div id="cases" class="list"></div>
+      <button id="runBtn" class="primary" disabled>Run decision</button>
+    </section>
+    <section class="panel wide">
+      <h2>Decision</h2>
+      <div id="badge" class="badge">idle</div>
+      <pre id="log" class="log"></pre>
+      <article id="draft" class="plan"></article>
+      <div id="cites"></div>
+    </section>
+    <section class="panel">
+      <h2>Judge</h2>
+      <div id="score" class="score">—</div>
+      <pre id="rec" class="log"></pre>
+      <div id="hitl" class="hitl hidden">
+        <h3>HITL</h3>
+        <textarea id="edit" rows="8"></textarea>
+        <div class="row">
+          <button id="approve" class="primary">Approve</button>
+          <button id="editBtn" class="secondary">Edit &amp; approve</button>
+          <button id="reject" class="danger">Reject</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    let domain = null, caseId = null, threadId = null, timer = null;
+    async function loadDomains() {
+      const ds = await (await fetch('/api/domains')).json();
+      const el = document.getElementById('domains');
+      el.innerHTML = '';
+      ds.forEach(d => {
+        const b = document.createElement('button');
+        b.className = 'item';
+        b.textContent = d.label;
+        b.onclick = () => { domain = d.id; document.querySelectorAll('#domains .item').forEach(x => x.classList.remove('active')); b.classList.add('active'); loadCases(d.id); };
+        el.appendChild(b);
+      });
+    }
+    async function loadCases(d) {
+      const cs = await (await fetch('/api/cases?domain=' + d)).json();
+      const el = document.getElementById('cases');
+      el.innerHTML = '';
+      cs.forEach(c => {
+        const b = document.createElement('button');
+        b.className = 'item';
+        b.textContent = c.title || c.case_id;
+        b.title = c.summary || '';
+        b.onclick = () => { caseId = c.case_id; document.querySelectorAll('#cases .item').forEach(x => x.classList.remove('active')); b.classList.add('active'); document.getElementById('runBtn').disabled = false; };
+        el.appendChild(b);
+      });
+    }
+    async function run() {
+      clearInterval(timer);
+      setBadge('running');
+      const res = await fetch('/run', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({domain, case_id: caseId, query: 'Run ' + domain + ' case ' + caseId})});
+      threadId = (await res.json()).thread_id;
+      timer = setInterval(poll, 700);
+    }
+    async function poll() {
+      const data = await (await fetch('/status/' + threadId)).json();
+      setBadge(data.status);
+      document.getElementById('log').textContent = (data.step_log||[]).join('\n');
+      document.getElementById('draft').textContent = data.draft || '';
+      document.getElementById('score').textContent = data.safety_score != null ? ('Safety ' + data.safety_score) : '—';
+      document.getElementById('rec').textContent = JSON.stringify(data.recommendation || {}, null, 2);
+      document.getElementById('cites').innerHTML = (data.citations||[]).map(c => `<div class="cite"><b>${c.id}</b> ${c.source}: ${c.text||''}</div>`).join('');
+      const hitl = document.getElementById('hitl');
+      if (data.status === 'pending_hitl') {
+        hitl.classList.remove('hidden');
+        if (data.interrupt && data.interrupt.draft) document.getElementById('edit').value = data.interrupt.draft;
+      } else hitl.classList.add('hidden');
+      if (data.status === 'completed' || data.status === 'failed') clearInterval(timer);
+    }
+    function setBadge(s){ const b=document.getElementById('badge'); b.textContent=s; b.className='badge '+s; }
+    async function decide(action){
+      const edited = document.getElementById('edit').value;
+      await fetch('/approve/'+threadId,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action, edited_body: action==='edit'?edited:null})});
+      setBadge('running'); timer=setInterval(poll,700);
+    }
+    document.getElementById('runBtn').onclick = run;
+    document.getElementById('approve').onclick = () => decide('approve');
+    document.getElementById('editBtn').onclick = () => decide('edit');
+    document.getElementById('reject').onclick = () => decide('reject');
+    loadDomains();
+  </script>
+</body>
+</html>

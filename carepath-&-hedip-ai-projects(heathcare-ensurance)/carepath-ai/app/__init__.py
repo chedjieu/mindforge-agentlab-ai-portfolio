@@ -1,0 +1,1 @@
+"""CarePath AI application package."""

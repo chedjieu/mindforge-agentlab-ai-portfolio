@@ -1,0 +1,12 @@
+{"id": "Q-E01", "query": "What torque specification applies to part PN-4421 on the Osaka assembly line?", "role": "engineer", "domain": "manufacturing", "must_include_terms": ["torque", "specification", "applies", "part"]}
+{"id": "Q-E02", "query": "What is PTO accrual for full-time US employees?", "role": "employee", "domain": "hr", "must_include_terms": ["PTO", "accrual", "full-time", "US"]}
+{"id": "Q-E03", "query": "LED blinks 3 times on power-up — what is the procedure?", "role": "support", "domain": "support", "must_include_terms": ["LED", "blinks", "times", "power-up"]}
+{"id": "Q-E04", "query": "Which SOP superseded SOP-M-104?", "role": "engineer", "domain": "manufacturing", "must_include_terms": ["Which", "SOP", "superseded", "SOP-M-104"]}
+{"id": "Q-E05", "query": "What is the change window for payment-service?", "role": "sre", "domain": "operations", "must_include_terms": ["change", "window", "payment-service"]}
+{"id": "Q-E06", "query": "What is Conn-X12 max current per STD-E-221?", "role": "engineer", "domain": "engineering", "must_include_terms": ["Conn-X12", "max", "current", "per"]}
+{"id": "Q-E07", "query": "Remote work policy for US full-time employees?", "role": "employee", "domain": "hr", "must_include_terms": ["Remote", "work", "policy", "US"]}
+{"id": "Q-E08", "query": "How do I RMA a device?", "role": "support", "domain": "support", "must_include_terms": ["RMA", "device"]}
+{"id": "Q-E09", "query": "SEV1 incident first steps?", "role": "sre", "domain": "operations", "must_include_terms": ["SEV1", "incident", "first", "steps"]}
+{"id": "Q-E10", "query": "Which EMC standard supersedes STD-E-050?", "role": "engineer", "domain": "engineering", "must_include_terms": ["Which", "EMC", "standard", "supersedes"]}
+{"id": "Q-E11", "query": "Seal leak test requirement for PN-4421 at Nagoya?", "role": "quality", "domain": "manufacturing", "must_include_terms": ["Seal", "leak", "test", "requirement"]}
+{"id": "Q-E12", "query": "Parental leave for Role-FT-US?", "role": "hr", "domain": "hr", "must_include_terms": ["Parental", "leave", "Role-FT-US"]}

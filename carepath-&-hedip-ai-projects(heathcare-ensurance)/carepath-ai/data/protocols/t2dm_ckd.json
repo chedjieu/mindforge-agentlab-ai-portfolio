@@ -1,0 +1,14 @@
+{
+  "id": "proto-t2dm-ckd",
+  "name": "T2DM with CKD stage 3a protocol",
+  "title": "Type 2 diabetes with mild-moderate CKD",
+  "conditions": ["type 2 diabetes", "ckd", "diabetes"],
+  "tags": ["endocrinology", "metformin", "sglt2"],
+  "summary": "Metformin dose review at eGFR 45–59; prefer agents with CKD benefit; A1C individualized.",
+  "steps": [
+    "Confirm eGFR and A1C",
+    "Adjust metformin if GI intolerance or eGFR declining",
+    "Add oral SGLT2i if injectable GLP-1 declined",
+    "Schedule labs in 8–12 weeks"
+  ]
+}

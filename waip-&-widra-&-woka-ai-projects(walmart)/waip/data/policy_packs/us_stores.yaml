@@ -1,0 +1,16 @@
+country: US
+bu: US Stores
+allowed_tools:
+  - workday.get_pay_stub
+  - workday.get_hours
+  - leave.get_balances
+  - leave.check_fmla
+  - servicenow.create_incident
+hitl_required_actions:
+  - create_ticket
+  - submit_leave
+confidence_floor: 0.75
+citation_required: true
+forbidden_topics:
+  - other_associate_compensation
+data_residency: US

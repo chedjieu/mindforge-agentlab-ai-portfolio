@@ -1,0 +1,22 @@
+{
+  "patient_id": "P002",
+  "display_name": "Jordan Lee (P002)",
+  "summary": "COPD + depression; sedative interaction risk",
+  "age": 71,
+  "sex": "F",
+  "conditions": [
+    {"name": "COPD", "onset": "2018"},
+    {"name": "Major depressive disorder", "onset": "2019"},
+    {"name": "Insomnia", "onset": "2020"}
+  ],
+  "medications": [
+    {"name": "albuterol", "dose": "2 puffs PRN"},
+    {"name": "tiotropium", "dose": "daily"},
+    {"name": "sertraline", "dose": "100 mg daily"},
+    {"name": "alprazolam", "dose": "0.5 mg PRN"},
+    {"name": "tramadol", "dose": "50 mg PRN pain"}
+  ],
+  "allergies": ["penicillin"],
+  "labs": {"egfr": 72, "a1c": 5.6},
+  "lifestyle": {"activity": "limited", "smoking": "current", "diet": "variable"}
+}

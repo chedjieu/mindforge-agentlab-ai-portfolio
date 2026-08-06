@@ -1,0 +1,14 @@
+{
+  "id": "proto-htn-dm",
+  "name": "Hypertension with diabetes protocol",
+  "title": "BP management in diabetes",
+  "conditions": ["hypertension", "diabetes"],
+  "tags": ["cardiology", "acei"],
+  "summary": "Target <130/80; ACEI/ARB backbone; monitor K+ and creatinine.",
+  "steps": [
+    "Confirm home BP averages",
+    "Optimize ACEI/ARB + CCB as needed",
+    "Lifestyle counseling",
+    "Lab monitoring after titration"
+  ]
+}

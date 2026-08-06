@@ -1,0 +1,27 @@
+{
+  "closed_dcs": [
+    {"dc_id": "ATL-01", "name": "Atlanta DC", "region": "SE", "status": "closed"},
+    {"dc_id": "JAX-02", "name": "Jacksonville DC", "region": "SE", "status": "closed"}
+  ],
+  "delayed_shipments": [
+    {"shipment_id": "SH-9001", "supplier_id": "SUP-ACME", "sku": "TV-55-4K", "dest_dc": "ATL-01", "status": "delayed", "eta_hours": 72},
+    {"shipment_id": "SH-9002", "supplier_id": "SUP-GULF", "sku": "MILK-GAL", "dest_dc": "JAX-02", "status": "delayed", "eta_hours": 36}
+  ],
+  "inventory_within_300mi": [
+    {"location_id": "MEM-03", "sku": "TV-55-4K", "qty": 12400},
+    {"location_id": "MEM-03", "sku": "MILK-GAL", "qty": 8200},
+    {"location_id": "MEM-03", "sku": "WATER-24", "qty": 15000}
+  ],
+  "alt_sourcing_contracts": [
+    {"contract_id": "C-ACME-2024", "supplier_id": "SUP-ACME", "allows_alt_source": true, "notice_hours": 48, "confidentiality": "internal"},
+    {"contract_id": "C-GULF-2023", "supplier_id": "SUP-GULF", "allows_alt_source": true, "notice_hours": 48, "confidentiality": "internal"}
+  ],
+  "stockout_risk_48h": [
+    {"store_id": "S-1001", "sku": "MILK-GAL", "qty": 40},
+    {"store_id": "S-1044", "sku": "MILK-GAL", "qty": 25}
+  ],
+  "affected_suppliers": [
+    {"supplier_id": "SUP-ACME", "name": "Acme Logistics"},
+    {"supplier_id": "SUP-GULF", "name": "GulfFresh Produce"}
+  ]
+}

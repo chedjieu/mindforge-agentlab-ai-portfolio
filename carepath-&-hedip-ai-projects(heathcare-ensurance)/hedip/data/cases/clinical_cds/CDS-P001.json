@@ -1,0 +1,12 @@
+{
+  "case_id": "CDS-P001",
+  "title": "T2DM + CKD CDS",
+  "summary": "Complex chronic care plan with metformin renal note",
+  "patient": {
+    "medications": ["metformin", "lisinopril", "atorvastatin"],
+    "conditions": ["Type 2 diabetes", "Hypertension", "CKD stage 3a"],
+    "labs": {"egfr": 58, "a1c": 8.1},
+    "allergies": ["sulfa"]
+  },
+  "preferences": {"avoid_injectables": true}
+}

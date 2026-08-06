@@ -1,0 +1,15 @@
+checkpoints.sqlite
+checkpoints.sqlite-shm
+checkpoints.sqlite-wal
+.cursor/
+.venv/
+__pycache__/
+*.pyc
+.env
+data/audit_packs.log
+data/hitl_outcomes.jsonl
+.ruff_cache/
+.pytest_cache/
+*.egg-info/
+dist/
+build/

@@ -1,0 +1,13 @@
+vertical: retail
+regs: [PCI-lite]
+tool_allowlist:
+  - hybrid_search
+  - lookup_entity
+  - traverse_relations
+  - salesforce_stub_read
+  - get_engagement_history
+retention_days: 730
+hitl_required: false
+forbidden_topics:
+  - cross_tenant_lookup
+  - raw_pan_storage

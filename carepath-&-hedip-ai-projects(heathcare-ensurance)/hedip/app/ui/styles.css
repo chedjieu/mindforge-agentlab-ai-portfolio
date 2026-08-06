@@ -1,0 +1,33 @@
+:root {
+  --bg: #0e151c; --panel: #172231; --text: #e8eef6; --muted: #9aadc4;
+  --accent: #2f9e87; --warn: #e0a800; --bad: #e36b6b; --border: #2a3b4f;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--text); min-height: 100vh;
+  background: radial-gradient(900px 500px at 0% 0%, #1a3340, var(--bg)); }
+.top { display: flex; justify-content: space-between; padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--border); }
+h1 { margin: 0; font-size: 1.35rem; }
+.sub { margin: .2rem 0 0; color: var(--muted); font-size: .9rem; }
+.grid { display: grid; grid-template-columns: 260px 1fr 300px; gap: 1rem; padding: 1rem 1.5rem 2rem; }
+@media (max-width: 1100px) { .grid { grid-template-columns: 1fr; } }
+.panel { background: color-mix(in srgb, var(--panel) 92%, black); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; }
+.panel.wide { min-height: 70vh; }
+.list { display: flex; flex-direction: column; gap: .4rem; margin-bottom: .8rem; }
+.item, button { border: 1px solid var(--border); background: #101a24; color: var(--text); border-radius: 8px; padding: .5rem .7rem; cursor: pointer; text-align: left; }
+.item.active, .primary { background: var(--accent); border-color: var(--accent); color: #04110e; font-weight: 600; }
+.secondary { background: #243447; }
+.danger { background: var(--bad); border-color: var(--bad); color: #1a0608; }
+button:disabled { opacity: .45; cursor: not-allowed; }
+.badge { display: inline-block; padding: .2rem .55rem; border-radius: 999px; background: #243447; font-size: .8rem; margin-bottom: .7rem; }
+.badge.pending_hitl { background: var(--warn); color: #1a1200; }
+.badge.completed { background: #3ecf8e; color: #042012; }
+.badge.running { background: var(--accent); color: #04110e; }
+.log, .plan { background: #0b1219; border: 1px solid var(--border); border-radius: 8px; padding: .7rem; white-space: pre-wrap; max-height: 220px; overflow: auto; font-size: .84rem; }
+.plan { max-height: 360px; margin-top: .7rem; }
+.cite { border-left: 3px solid var(--accent); padding: .35rem .6rem; margin: .35rem 0; background: #101a24; font-size: .82rem; color: var(--muted); }
+.score { font-size: 1.35rem; font-weight: 700; margin-bottom: .5rem; }
+.hitl { margin-top: 1rem; padding-top: .75rem; border-top: 1px solid var(--border); }
+.hitl.hidden { display: none; }
+.hitl textarea { width: 100%; background: #0b1219; color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: .5rem; margin-bottom: .5rem; }
+.row { display: flex; flex-wrap: wrap; gap: .4rem; }

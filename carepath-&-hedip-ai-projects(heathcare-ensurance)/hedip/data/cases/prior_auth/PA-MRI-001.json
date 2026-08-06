@@ -1,0 +1,11 @@
+{
+  "case_id": "PA-MRI-001",
+  "title": "Lumbar MRI - incomplete PT",
+  "summary": "MRI request missing completed physical therapy documentation",
+  "service": "mri_lumbar",
+  "expected_decision": "need_info",
+  "incomplete_docs": true,
+  "documentation": {"pt_complete": false, "conservative_care_weeks": 2},
+  "patient": {"id": "M100", "conditions": ["lumbar radiculopathy"], "age": 54},
+  "prior_therapies": ["NSAIDs"]
+}

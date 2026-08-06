@@ -1,0 +1,14 @@
+vertical: healthcare
+regs: [HIPAA, SOC2]
+tool_allowlist:
+  - hybrid_search
+  - lookup_entity
+  - traverse_relations
+  - fhir_stub_read
+  - get_engagement_history
+retention_days: 2555
+hitl_required: true
+forbidden_topics:
+  - clinical_diagnosis_advice
+  - cross_tenant_lookup
+  - phi_bulk_export

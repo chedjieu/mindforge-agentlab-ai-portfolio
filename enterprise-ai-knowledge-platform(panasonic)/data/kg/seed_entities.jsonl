@@ -1,0 +1,51 @@
+{"id": "PN-4421", "label": "Part", "name": "PN-4421", "props": {"family": "battery_tray"}}
+{"id": "PN-8801", "label": "Part", "name": "PN-8801", "props": {"family": "cell"}}
+{"id": "BOM-BAT-TRAY", "label": "BOM", "name": "Battery Tray BOM", "props": {}}
+{"id": "Plant-Osaka", "label": "Plant", "name": "Osaka Assembly", "props": {"region": "APAC"}}
+{"id": "Plant-Nagoya", "label": "Plant", "name": "Nagoya Assembly", "props": {"region": "APAC"}}
+{"id": "Line-A3", "label": "Section", "name": "Line A3", "props": {"plant": "Osaka"}}
+{"id": "Tool-TW-Osaka-12", "label": "Document", "name": "Torque Wrench TW-Osaka-12", "props": {}}
+{"id": "SOP-M-104", "label": "SOP", "name": "Torque Assembly v1", "props": {"version": 1}}
+{"id": "SOP-M-105", "label": "SOP", "name": "Torque Assembly v2", "props": {"version": 2}}
+{"id": "SOP-M-210", "label": "SOP", "name": "Cell Insertion", "props": {}}
+{"id": "SOP-M-220", "label": "SOP", "name": "Seal Leak Test", "props": {}}
+{"id": "WI-M-015", "label": "Document", "name": "Calibration WI", "props": {}}
+{"id": "DOC-BOM-BAT-TRAY", "label": "Document", "name": "BOM notes", "props": {}}
+{"id": "PLANT-OSAKA-SAFE", "label": "Document", "name": "Osaka Line Safety", "props": {}}
+{"id": "STD-E-220", "label": "Document", "name": "Connector Spec v1", "props": {}}
+{"id": "STD-E-221", "label": "Document", "name": "Connector Spec v2", "props": {}}
+{"id": "STD-E-310", "label": "Document", "name": "Thermal Design", "props": {}}
+{"id": "STD-E-050", "label": "Document", "name": "EMC Limits v1", "props": {}}
+{"id": "STD-E-051", "label": "Document", "name": "EMC Limits v2", "props": {}}
+{"id": "DES-E-441", "label": "Document", "name": "Housing H7", "props": {}}
+{"id": "Conn-X12", "label": "Part", "name": "Conn-X12", "props": {}}
+{"id": "Housing-H7", "label": "Part", "name": "Housing H7", "props": {}}
+{"id": "KB-BAT-LED", "label": "Document", "name": "LED Codes KB", "props": {}}
+{"id": "KB-BAT-TREE", "label": "Document", "name": "Troubleshooting Tree", "props": {}}
+{"id": "KB-CONN-INT", "label": "Document", "name": "Conn intermittent KB", "props": {}}
+{"id": "KB-FW-UPD", "label": "Document", "name": "FW Update KB", "props": {}}
+{"id": "KB-WARRANTY", "label": "Document", "name": "Warranty KB", "props": {}}
+{"id": "KB-RMA", "label": "Document", "name": "RMA KB", "props": {}}
+{"id": "Symptom-LED-3x", "label": "Symptom", "name": "LED blinks 3x", "props": {}}
+{"id": "Symptom-LED-5x", "label": "Symptom", "name": "LED blinks 5x", "props": {}}
+{"id": "Symptom-Intermittent", "label": "Symptom", "name": "Intermittent connection", "props": {}}
+{"id": "FW-2.4.1", "label": "Document", "name": "Firmware 2.4.1", "props": {}}
+{"id": "Policy-Warranty", "label": "Policy", "name": "Warranty Policy", "props": {}}
+{"id": "TicketPattern-RMA", "label": "TicketPattern", "name": "RMA Pattern", "props": {}}
+{"id": "POL-HR-pto-us", "label": "Policy", "name": "US PTO Accrual", "props": {"region": "US"}}
+{"id": "POL-HR-travel", "label": "Policy", "name": "Travel Policy", "props": {}}
+{"id": "POL-HR-coc", "label": "Policy", "name": "Code of Conduct", "props": {}}
+{"id": "POL-HR-remote", "label": "Policy", "name": "Remote Work US", "props": {}}
+{"id": "POL-HR-parental", "label": "Policy", "name": "Parental Leave US", "props": {}}
+{"id": "POL-HR-expense", "label": "Policy", "name": "Expense Policy", "props": {}}
+{"id": "Role-FT-US", "label": "Role", "name": "Full-time US Employee", "props": {}}
+{"id": "Role-Manager-US", "label": "Role", "name": "US Manager", "props": {}}
+{"id": "Svc-payment", "label": "Service", "name": "payment-service", "props": {}}
+{"id": "Svc-auth", "label": "Service", "name": "auth-service", "props": {}}
+{"id": "Svc-events", "label": "Service", "name": "events-service", "props": {}}
+{"id": "RB-OPS-payment-change", "label": "Document", "name": "Payment change runbook", "props": {}}
+{"id": "RB-OPS-sev1", "label": "Document", "name": "SEV1 runbook", "props": {}}
+{"id": "RB-OPS-auth", "label": "Document", "name": "Auth runbook", "props": {}}
+{"id": "RB-OPS-canary", "label": "Document", "name": "Canary runbook", "props": {}}
+{"id": "RB-OPS-backup", "label": "Document", "name": "Backup runbook", "props": {}}
+{"id": "RB-OPS-kafka", "label": "Document", "name": "Kafka lag runbook", "props": {}}

@@ -1,0 +1,30 @@
+# Normalize text files to LF in the repo and working tree (avoids CRLF warnings on Windows)
+* text=auto eol=lf
+
+# Explicit text types
+*.md text eol=lf
+*.py text eol=lf
+*.toml text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.jsonl text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.sh text eol=lf
+*.tf text eol=lf
+*.lock text eol=lf
+.gitignore text eol=lf
+.env.example text eol=lf
+
+# Binary
+*.sqlite binary
+*.sqlite-shm binary
+*.sqlite-wal binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary

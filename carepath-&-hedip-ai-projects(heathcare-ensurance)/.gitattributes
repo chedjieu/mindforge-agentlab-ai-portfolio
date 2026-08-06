@@ -1,0 +1,35 @@
+# Normalize line endings: LF in repo and working tree (avoids CRLF warnings on Windows)
+* text=auto eol=lf
+
+# Explicit text
+*.py text eol=lf
+*.md text eol=lf
+*.toml text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.jsonl text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.txt text eol=lf
+*.env.example text eol=lf
+*.lock text eol=lf
+*.gitignore text eol=lf
+*.gitattributes text eol=lf
+
+# Binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.gz binary
+*.whl binary
+*.sqlite binary
+*.db binary

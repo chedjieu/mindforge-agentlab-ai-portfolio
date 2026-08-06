@@ -1,0 +1,58 @@
+{
+  "profiles": [
+    {
+      "customer_id": "CUST-1001",
+      "name": "Alex Rivera",
+      "kyc_status": "verified",
+      "synthetic_risk": 0.55,
+      "face_match": 0.71,
+      "device_fingerprint": "DEV-SHARED-77",
+      "account_age_days": 18,
+      "findings": [
+        "Thin-file identity",
+        "Device shared with 2 other customers"
+      ]
+    },
+    {
+      "customer_id": "CUST-2002",
+      "name": "Jordan Lee",
+      "kyc_status": "verified",
+      "synthetic_risk": 0.2,
+      "face_match": 0.96,
+      "account_age_days": 840,
+      "findings": [
+        "Long-standing customer"
+      ],
+      "ofac_hit": false
+    },
+    {
+      "customer_id": "CUST-3003",
+      "name": "Sam Patel",
+      "kyc_status": "verified",
+      "synthetic_risk": 0.15,
+      "face_match": 0.94,
+      "account_age_days": 400,
+      "findings": []
+    },
+    {
+      "customer_id": "CUST-5005",
+      "name": "Morgan Blake",
+      "kyc_status": "reverify_required",
+      "synthetic_risk": 0.35,
+      "face_match": 0.4,
+      "account_age_days": 210,
+      "findings": [
+        "Face match drop after device change"
+      ]
+    },
+    {
+      "customer_id": "CUST-8008",
+      "name": "Taylor Brooks",
+      "kyc_status": "verified",
+      "synthetic_risk": 0.05,
+      "face_match": 0.99,
+      "account_age_days": 1200,
+      "findings": []
+    }
+  ]
+}

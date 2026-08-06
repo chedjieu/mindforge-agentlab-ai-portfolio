@@ -1,0 +1,246 @@
+{
+  "name": "Agentic RAG Chatbot",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "options": {
+          "title": "AI Research Knowledge Assistant",
+          "subtitle": "Ask about Lilian Weng's blog posts (agents, RAG, diffusion, LLMs, ...)",
+          "responseMode": "lastNode",
+          "inputPlaceholder": "Ask a research question..."
+        }
+      },
+      "id": "chat-trigger-001",
+      "name": "Chat Trigger",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [260, 340],
+      "webhookId": "agentic-rag-chat"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8000/chat",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"message\": {{ JSON.stringify($json.chatInput || $json.message || \"\") }},\n  \"session_id\": {{ JSON.stringify($json.sessionId || $json.session_id || \"n8n-chat\") }}\n}",
+        "options": {
+          "timeout": 120000,
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "http-chat-001",
+      "name": "Call Chatbot API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [520, 340]
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json;\nconst trigger = $('Chat Trigger').first().json;\n\nconst query = trigger.chatInput || trigger.message || '';\nconst sessionId = trigger.sessionId || trigger.session_id || 'n8n-chat';\n\nconst answer = input.answer || input.error || input.message || JSON.stringify(input);\nconst sources = Array.isArray(input.sources) ? input.sources : [];\nconst steps = Array.isArray(input.steps) ? input.steps : [];\nconst apiError = input.error || null;\n\nlet formatted = String(answer);\nif (sources.length) {\n  formatted += '\\n\\n**Sources**\\n';\n  for (const s of sources) {\n    const title = s.title || 'Source';\n    const url = s.url || '';\n    formatted += url ? `- ${title}: ${url}\\n` : `- ${title}\\n`;\n  }\n}\nif (steps.length) {\n  formatted += '\\n_Tools used: ' + steps.map(s => s.tool).filter(Boolean).join(', ') + '_';\n}\n\nconst escalate = /\\b(escalate|human)\\b/i.test(query) || Boolean(apiError);\nconst logRecord = {\n  timestamp: new Date().toISOString(),\n  session_id: sessionId,\n  query,\n  answer: String(answer),\n  sources,\n  steps,\n  escalate,\n  api_error: apiError\n};\n\nreturn [{\n  json: {\n    output: formatted,\n    text: formatted,\n    query,\n    session_id: sessionId,\n    answer: String(answer),\n    sources,\n    steps,\n    escalate,\n    api_error: apiError,\n    timestamp: logRecord.timestamp,\n    log_line: JSON.stringify(logRecord)\n  }\n}];"
+      },
+      "id": "format-response-001",
+      "name": "Format Chat Reply",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [780, 340]
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "log_line",
+        "options": {
+          "fileName": "={{ 'n8n_chat_' + $json.session_id + '_' + Date.now() + '.jsonl' }}"
+        }
+      },
+      "id": "convert-log-001",
+      "name": "Convert Log To File",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [1040, 340]
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "=/logs/{{ $binary.data.fileName }}",
+        "options": {}
+      },
+      "id": "write-log-001",
+      "name": "Write Query Log",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [1280, 340],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "escalate-cond",
+              "leftValue": "={{ $('Format Chat Reply').item.json.escalate }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-escalate-001",
+      "name": "Needs Escalation?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1520, 340]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://httpbin.org/post",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"text\": \"Agentic RAG alert\\nSession: {{ $('Format Chat Reply').item.json.session_id }}\\nQuery: {{ $('Format Chat Reply').item.json.query }}\\nError: {{ $('Format Chat Reply').item.json.api_error || 'n/a' }}\"\n}",
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "webhook-notify-001",
+      "name": "Slack or Webhook Notify",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1760, 220],
+      "continueOnFail": true,
+      "notesInFlow": true,
+      "notes": "Replace URL with your Slack Incoming Webhook URL for real notifications."
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "out-1",
+              "name": "output",
+              "value": "={{ $('Format Chat Reply').item.json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "final-output-001",
+      "name": "Chat Output",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [2000, 340]
+    }
+  ],
+  "connections": {
+    "Chat Trigger": {
+      "main": [
+        [
+          {
+            "node": "Call Chatbot API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Chatbot API": {
+      "main": [
+        [
+          {
+            "node": "Format Chat Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Chat Reply": {
+      "main": [
+        [
+          {
+            "node": "Convert Log To File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Log To File": {
+      "main": [
+        [
+          {
+            "node": "Write Query Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write Query Log": {
+      "main": [
+        [
+          {
+            "node": "Needs Escalation?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Needs Escalation?": {
+      "main": [
+        [
+          {
+            "node": "Slack or Webhook Notify",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Chat Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slack or Webhook Notify": {
+      "main": [
+        [
+          {
+            "node": "Chat Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "1.0.0"
+}

@@ -1,0 +1,15 @@
+{"rel": "GUIDELINE_FOR", "from": "guide-ada", "to": "cond-t2dm", "from_name": "ADA Standards of Care T2DM", "to_name": "Type 2 diabetes mellitus"}
+{"rel": "GUIDELINE_FOR", "from": "guide-aha", "to": "cond-postmi", "from_name": "AHA/ACC Secondary Prevention", "to_name": "Post-MI"}
+{"rel": "GUIDELINE_FOR", "from": "proto-t2dm", "to": "cond-ckd", "from_name": "T2DM CKD protocol", "to_name": "CKD stage 3a"}
+{"rel": "INTERACTS_WITH", "from": "med-alprazolam", "to": "med-tramadol", "from_name": "alprazolam", "to_name": "tramadol", "severity": "major", "note": "Sedative / serotonergic synergy"}
+{"rel": "INTERACTS_WITH", "from": "med-sertraline", "to": "med-tramadol", "from_name": "sertraline", "to_name": "tramadol", "severity": "major", "note": "Serotonin syndrome risk"}
+{"rel": "INTERACTS_WITH", "from": "med-atorvastatin", "to": "med-omeprazole", "from_name": "atorvastatin", "to_name": "omeprazole", "severity": "minor", "note": "Possible CYP interaction"}
+{"rel": "INTERACTS_WITH", "from": "med-lisinopril", "to": "med-aspirin", "from_name": "lisinopril", "to_name": "aspirin", "severity": "minor", "note": "High-dose ASA may blunt ACEI; low-dose OK"}
+{"rel": "MONITORS", "from": "lab-egfr", "to": "med-metformin", "from_name": "eGFR", "to_name": "metformin", "note": "Renal dosing gate"}
+{"rel": "CONTRAINDICATED_FOR", "from": "med-metformin", "to": "cond-ckd", "from_name": "metformin", "to_name": "CKD stage 3a", "note": "Dose-adjust; stop if eGFR <30", "severity": "moderate"}
+{"rel": "HAS_CONDITION", "from": "P001", "to": "cond-t2dm", "from_name": "P001", "to_name": "Type 2 diabetes mellitus"}
+{"rel": "PRESCRIBED", "from": "P001", "to": "med-metformin", "from_name": "P001", "to_name": "metformin"}
+{"rel": "HAS_CONDITION", "from": "P002", "to": "cond-copd", "from_name": "P002", "to_name": "COPD"}
+{"rel": "PRESCRIBED", "from": "P002", "to": "med-alprazolam", "from_name": "P002", "to_name": "alprazolam"}
+{"rel": "HAS_CONDITION", "from": "P003", "to": "cond-postmi", "from_name": "P003", "to_name": "Post-MI"}
+{"rel": "PRESCRIBED", "from": "P003", "to": "med-metoprolol", "from_name": "P003", "to_name": "metoprolol"}

@@ -1,0 +1,94 @@
+{
+  "nodes": [
+    {
+      "id": "CUST-1001",
+      "label": "Customer",
+      "name": "Alex Rivera"
+    },
+    {
+      "id": "ACC-1001",
+      "label": "Account"
+    },
+    {
+      "id": "PROD-BAL",
+      "label": "Product",
+      "code": "AG-BALANCED-60"
+    },
+    {
+      "id": "GOAL-RET",
+      "label": "Goal",
+      "name": "retirement"
+    },
+    {
+      "id": "DEV-SHARED-77",
+      "label": "Device"
+    },
+    {
+      "id": "CUST-1002",
+      "label": "Customer",
+      "name": "Jamie Ortiz"
+    },
+    {
+      "id": "TXN-W-1",
+      "label": "Transaction",
+      "amount": 42000
+    },
+    {
+      "id": "MERCH-QC",
+      "label": "Merchant",
+      "name": "QuickCash LLC"
+    },
+    {
+      "id": "FP-VELOCITY",
+      "label": "FraudPattern",
+      "name": "wire_velocity"
+    }
+  ],
+  "edges": [
+    {
+      "source": "CUST-1001",
+      "target": "ACC-1001",
+      "type": "OWNS"
+    },
+    {
+      "source": "CUST-1001",
+      "target": "GOAL-RET",
+      "type": "OWNS"
+    },
+    {
+      "source": "PROD-BAL",
+      "target": "GOAL-RET",
+      "type": "SUITABLE_FOR"
+    },
+    {
+      "source": "CUST-1001",
+      "target": "PROD-BAL",
+      "type": "SIMILAR_TO"
+    },
+    {
+      "source": "CUST-1001",
+      "target": "DEV-SHARED-77",
+      "type": "OWNS"
+    },
+    {
+      "source": "CUST-1002",
+      "target": "DEV-SHARED-77",
+      "type": "SHARES_DEVICE"
+    },
+    {
+      "source": "CUST-1001",
+      "target": "TXN-W-1",
+      "type": "OWNS"
+    },
+    {
+      "source": "TXN-W-1",
+      "target": "MERCH-QC",
+      "type": "TRANSFERRED_TO"
+    },
+    {
+      "source": "TXN-W-1",
+      "target": "FP-VELOCITY",
+      "type": "MATCHES_PATTERN"
+    }
+  ]
+}

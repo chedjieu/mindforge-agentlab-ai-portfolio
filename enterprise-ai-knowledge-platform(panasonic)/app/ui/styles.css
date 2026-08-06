@@ -1,0 +1,73 @@
+* { box-sizing: border-box; }
+body {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  margin: 0;
+  padding: 1.5rem;
+  background: #eef2f5;
+  color: #15202b;
+}
+header { margin-bottom: 1.5rem; }
+h1 { margin: 0 0 0.25rem; font-size: 1.5rem; }
+.subtitle { color: #4a5560; margin: 0; }
+.card {
+  background: #fff;
+  border: 1px solid #d5dde5;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+.card h3 { margin: 0 0 0.75rem; font-size: 1.05rem; }
+.meta { color: #3d4a57; font-size: 0.9rem; margin-bottom: 0.4rem; }
+.citations { margin: 0.35rem 0 1rem 1.25rem; }
+.citations li { margin-bottom: 0.35rem; }
+textarea {
+  width: 100%;
+  min-height: 140px;
+  padding: 0.75rem;
+  border: 1px solid #c5ced8;
+  border-radius: 6px;
+  font: inherit;
+  resize: vertical;
+}
+.actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem; }
+button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font: inherit;
+}
+.btn-approve { background: #1a7f37; color: #fff; }
+.btn-edit { background: #0969da; color: #fff; }
+.btn-reject { background: #cf222e; color: #fff; }
+.empty { color: #666; font-style: italic; }
+.error { color: #cf222e; font-style: normal; }
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+.btn-demo { background: #0b3d5c; color: #fff; }
+.btn-demo-hr { background: #8a4b08; color: #fff; }
+.toolbar-status { color: #444; font-size: 0.9rem; }
+.thread-status {
+  background: #fff;
+  border: 1px solid #d5dde5;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+}
+.thread-status h2 { margin: 0 0 0.75rem; font-size: 1rem; }
+.thread-status ul { margin: 0; padding-left: 1.25rem; }
+.thread-status li { margin-bottom: 0.5rem; }
+.thread-error {
+  color: #cf222e;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  word-break: break-word;
+}
+section > h2 { font-size: 1.1rem; margin: 0 0 0.75rem; }
+.status { font-size: 0.85rem; color: #666; margin-top: 0.5rem; }
+.citations-label { font-weight: 600; margin-top: 0.5rem; }

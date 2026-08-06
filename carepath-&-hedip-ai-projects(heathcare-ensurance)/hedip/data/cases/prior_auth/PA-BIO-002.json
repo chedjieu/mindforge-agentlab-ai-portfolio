@@ -1,0 +1,12 @@
+{
+  "case_id": "PA-BIO-002",
+  "title": "Biologic - step therapy fail",
+  "summary": "Adalimumab without required methotrexate step",
+  "service": "adalimumab",
+  "drug": "adalimumab",
+  "expected_decision": "deny",
+  "force_deny": true,
+  "patient": {"id": "M200", "conditions": ["rheumatoid arthritis"], "age": 48},
+  "prior_therapies": ["NSAIDs"],
+  "documentation": {"pt_complete": true}
+}

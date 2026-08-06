@@ -1,0 +1,10 @@
+{
+  "topicsConfig": [
+    {
+      "name": "Cooking and Recipes",
+      "definition": "Any request for cooking recipes, ingredients, or step-by-step food preparation instructions.",
+      "examples": ["give me a recipe for", "how do I cook", "ingredients for"],
+      "type": "DENY"
+    }
+  ]
+}

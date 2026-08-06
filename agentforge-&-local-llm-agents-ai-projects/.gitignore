@@ -1,0 +1,23 @@
+# Cursor / local agent workspace (not for remote)
+.cursor/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+*.log
+.ipynb_checkpoints/

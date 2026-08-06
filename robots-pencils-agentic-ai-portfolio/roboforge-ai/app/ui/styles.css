@@ -1,0 +1,46 @@
+:root {
+  --bg: #101820;
+  --panel: #1b2838;
+  --text: #eef3f8;
+  --muted: #8fa3b8;
+  --accent: #2f9e7a;
+  --ok: #3ecf8e;
+  --warn: #d4a017;
+  --danger: #e57373;
+  --border: #2c3c4f;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  background: radial-gradient(900px 500px at 80% -10%, #1e3a32, var(--bg));
+  color: var(--text);
+  min-height: 100vh;
+  padding: 2rem;
+}
+header h1 { margin: 0 0 0.35rem; letter-spacing: -0.02em; }
+.subtitle { color: var(--muted); margin: 0 0 1.5rem; }
+.toolbar { display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem; }
+.btn-demo, .btn-approve, .btn-edit, .btn-reject {
+  border: 0; border-radius: 6px; padding: 0.65rem 1rem; font-weight: 600; cursor: pointer;
+}
+.btn-demo { background: var(--accent); color: #fff; }
+.btn-approve { background: var(--ok); color: #062016; }
+.btn-edit { background: var(--warn); color: #1a1400; }
+.btn-reject { background: var(--danger); color: #1a0506; }
+.toolbar-status, .meta, .empty { color: var(--muted); font-size: 0.9rem; }
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.15rem;
+  margin-bottom: 1rem;
+}
+textarea.draft-body {
+  width: 100%; min-height: 110px; margin: 0.5rem 0 0.75rem;
+  background: #0d141c; color: var(--text); border: 1px solid var(--border);
+  border-radius: 6px; padding: 0.75rem; font-family: inherit;
+}
+.actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.status { margin-top: 0.75rem; color: var(--ok); }
+code { background: #0d141c; padding: 0.1rem 0.35rem; border-radius: 4px; }

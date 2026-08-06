@@ -1,0 +1,8 @@
+{
+  "case_id": "RCM-001",
+  "title": "ED note coding assist",
+  "summary": "Suggest ICD/CPT and flag doc gaps",
+  "suggested_icd10": ["R07.9", "I10"],
+  "suggested_cpt": ["99284"],
+  "documentation_gaps": ["missing medical decision-making detail"]
+}

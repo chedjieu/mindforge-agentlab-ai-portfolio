@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Research Assistant | Resonance Technologies</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <script src="https://unpkg.com/htmx-ext-sse@2.0.0/sse.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  </head>
+  <body hx-ext="sse">
+    <header>
+      <img src="/static/logo.png" alt="Resonance Technologies logo" onerror="this.style.display='none'" />
+      <h1>AI Research Assistant</h1>
+    </header>
+
+    <main>
+      <section class="card question-card">
+        <label for="question">Research question</label>
+        <textarea
+          id="question"
+          placeholder="e.g. How does IAM access key rotation work on AWS?"
+        ></textarea>
+        <div class="actions">
+          <button id="research-btn" type="button">Research</button>
+          <span class="status" id="status">Ready.</span>
+        </div>
+      </section>
+
+      <section class="panels">
+        <div class="card panel">
+          <h2>Progress</h2>
+          <div id="progress"></div>
+        </div>
+        <div class="card panel">
+          <h2>Report</h2>
+          <div id="report" class="markdown-body"></div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const btn = document.getElementById("research-btn");
+      const questionEl = document.getElementById("question");
+      const statusEl = document.getElementById("status");
+      const progressEl = document.getElementById("progress");
+      const reportEl = document.getElementById("report");
+      let source = null;
+
+      function escapeHtml(text) {
+        return text
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;");
+      }
+
+      function renderProgress(stepLog) {
+        progressEl.innerHTML = stepLog
+          .map((line) => `<div class="step">${escapeHtml(line)}</div>`)
+          .join("");
+      }
+
+      function handleEvent(raw) {
+        let event;
+        try {
+          event = JSON.parse(raw);
+        } catch {
+          return;
+        }
+
+        if (event.event === "error") {
+          const msg = event.error || "Unknown error";
+          statusEl.textContent = `Research failed: ${msg}`;
+          progressEl.innerHTML += `<div class="step error">${escapeHtml(msg)}</div>`;
+          btn.disabled = false;
+          closeStream();
+          return;
+        }
+
+        const output = event?.data?.output;
+        if (output?.step_log?.length) {
+          renderProgress(output.step_log);
+        }
+        if (output?.report) {
+          reportEl.innerHTML = marked.parse(output.report);
+          statusEl.textContent = "Done.";
+          btn.disabled = false;
+        }
+      }
+
+      function closeStream() {
+        if (source) {
+          source.close();
+          source = null;
+        }
+      }
+
+      btn.addEventListener("click", async () => {
+        const question = questionEl.value.trim();
+        if (!question) {
+          statusEl.textContent = "Enter a question first.";
+          return;
+        }
+
+        closeStream();
+        progressEl.innerHTML = "";
+        reportEl.innerHTML = "";
+        btn.disabled = true;
+        statusEl.textContent = "Starting research…";
+
+        try {
+          const resp = await fetch("/research", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ question }),
+          });
+          if (!resp.ok) {
+            throw new Error(`POST /research failed (${resp.status})`);
+          }
+          const { thread_id } = await resp.json();
+          statusEl.textContent = `Streaming (${thread_id.slice(0, 8)}…)…`;
+
+          source = new EventSource(`/stream/${thread_id}`);
+          source.onmessage = (msg) => handleEvent(msg.data);
+          source.onerror = () => {
+            closeStream();
+            btn.disabled = false;
+            if (!reportEl.innerHTML && !progressEl.querySelector(".error")) {
+              statusEl.textContent = "Stream ended — check server logs if no report appeared.";
+            }
+          };
+        } catch (err) {
+          btn.disabled = false;
+          statusEl.textContent = err.message || "Request failed.";
+        }
+      });
+    </script>
+  </body>
+</html>

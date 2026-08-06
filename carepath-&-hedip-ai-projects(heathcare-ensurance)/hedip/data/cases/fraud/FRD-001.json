@@ -1,0 +1,9 @@
+{
+  "case_id": "FRD-001",
+  "title": "Provider collusion pattern",
+  "summary": "Graph anomaly and high fraud score",
+  "provider_id": "PRV-77",
+  "fraud_score": 0.88,
+  "community_anomaly": true,
+  "signals": ["duplicate claims", "shared address cluster"]
+}

@@ -1,0 +1,32 @@
+# Normalize text files to LF in the repo and working tree.
+* text=auto eol=lf
+
+# Keep Windows scripts CRLF when present.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Treat lockfiles and common source as text.
+*.md text eol=lf
+*.py text eol=lf
+*.toml text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.jsonl text eol=lf
+*.html text eol=lf
+*.sql text eol=lf
+*.lock text eol=lf
+uv.lock text eol=lf
+
+# Binary assets — do not touch line endings.
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.zip binary

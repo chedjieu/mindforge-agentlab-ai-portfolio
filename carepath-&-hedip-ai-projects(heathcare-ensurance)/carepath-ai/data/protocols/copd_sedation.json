@@ -1,0 +1,14 @@
+{
+  "id": "proto-copd-sedation",
+  "name": "COPD with sedative risk protocol",
+  "title": "COPD and CNS depressant safety",
+  "conditions": ["copd", "depression", "insomnia"],
+  "tags": ["pulmonology", "pharmacy"],
+  "summary": "Avoid benzo + opioid combinations; prioritize smoking cessation and rehab.",
+  "steps": [
+    "Reconcile sedating meds",
+    "Deprescribe or separate benzo/opioid when feasible",
+    "Refer pulmonary rehab",
+    "Counsel smoking cessation"
+  ]
+}

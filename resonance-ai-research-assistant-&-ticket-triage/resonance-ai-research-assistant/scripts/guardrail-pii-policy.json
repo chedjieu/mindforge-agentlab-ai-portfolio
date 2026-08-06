@@ -1,0 +1,6 @@
+{
+  "piiEntitiesConfig": [
+    {"type": "PHONE", "action": "ANONYMIZE"},
+    {"type": "EMAIL", "action": "ANONYMIZE"}
+  ]
+}

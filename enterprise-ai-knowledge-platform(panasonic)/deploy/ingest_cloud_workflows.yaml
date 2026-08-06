@@ -1,0 +1,50 @@
+# EGKP ingest stub (GCP Cloud Workflows) — bronze → silver → gold → index.
+# Chat loop must NOT call this workflow.
+main:
+  params: [args]
+  steps:
+    - bronze:
+        call: http.post
+        args:
+          url: ${"https://egkp-ingest-bronze-" + sys.get_env("GCP_REGION") + "-" + sys.get_env("GCP_PROJECT") + ".cloudfunctions.net"}
+          body:
+            bucket: ${args.bucket}
+            prefix: bronze/
+        result: bronze_result
+    - silver:
+        call: http.post
+        args:
+          url: ${"https://egkp-ingest-silver-" + sys.get_env("GCP_REGION") + "-" + sys.get_env("GCP_PROJECT") + ".cloudfunctions.net"}
+          body:
+            bronze: ${bronze_result.body}
+        result: silver_result
+    - gold:
+        call: http.post
+        args:
+          url: ${"https://egkp-ingest-gold-" + sys.get_env("GCP_REGION") + "-" + sys.get_env("GCP_PROJECT") + ".cloudfunctions.net"}
+          body:
+            silver: ${silver_result.body}
+        result: gold_result
+    - index:
+        parallel:
+          branches:
+            - vectors:
+                steps:
+                  - upsert_vectors:
+                      call: http.post
+                      args:
+                        url: ${"https://egkp-ingest-vectors-" + sys.get_env("GCP_REGION") + "-" + sys.get_env("GCP_PROJECT") + ".cloudfunctions.net"}
+                        body:
+                          gold: ${gold_result.body}
+            - kg:
+                steps:
+                  - upsert_neo4j:
+                      call: http.post
+                      args:
+                        url: ${"https://egkp-ingest-kg-" + sys.get_env("GCP_REGION") + "-" + sys.get_env("GCP_PROJECT") + ".cloudfunctions.net"}
+                        body:
+                          gold: ${gold_result.body}
+    - done:
+        return:
+          status: ok
+          note: stub workflow — wire real Cloud Functions before deploy

@@ -1,0 +1,12 @@
+﻿.venv\Scripts\python.exe : C:\Users\Desire\projects(ml-ai)\0.ide_vs-code_&_cursor\3.MT_AgenticAI\starter-repo-main\star
+ter-repo\.venv\Lib\site-packages\langgraph\checkpoint\base\__init__.py:18: LangChainPendingDeprecationWarning: The 
+default value of `allowed_objects` will change in a future version. Pass an explicit value (e.g., 
+allowed_objects='messages' or allowed_objects='core') to suppress this warning.
+At C:\Users\Desire\AppData\Local\Temp\ps-script-f0f6bb9e-9c15-4194-81ea-454a0f1e05c8.ps1:108 char:118
++ ... in\RAIRA-AI-Research-Assistant"; .venv\Scripts\python.exe _test_warn.py 2>&1 | Out-F ...
++                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (C:\Users\Desire...s this warning.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  from langgraph.checkpoint.serde.jsonplus import JsonPlusSerializer
+ok

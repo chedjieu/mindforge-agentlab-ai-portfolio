@@ -1,0 +1,22 @@
+{
+  "patient_id": "P003",
+  "display_name": "Sam Chen (P003)",
+  "summary": "Post-MI; prefers to avoid beta-blocker",
+  "age": 55,
+  "sex": "M",
+  "conditions": [
+    {"name": "Post-MI", "onset": "2025"},
+    {"name": "Hypertension", "onset": "2020"},
+    {"name": "Hyperlipidemia", "onset": "2019"}
+  ],
+  "medications": [
+    {"name": "aspirin", "dose": "81 mg daily"},
+    {"name": "clopidogrel", "dose": "75 mg daily"},
+    {"name": "atorvastatin", "dose": "80 mg nightly"},
+    {"name": "lisinopril", "dose": "10 mg daily"},
+    {"name": "metoprolol", "dose": "25 mg BID"}
+  ],
+  "allergies": [],
+  "labs": {"egfr": 88, "ldl": 68, "troponin": "normalized"},
+  "lifestyle": {"activity": "cardiac rehab", "diet": "heart healthy", "smoking": "never"}
+}

@@ -1,0 +1,21 @@
+general_employee:
+  description: Store / DC associates
+  roles: [associate]
+  clearance: internal
+
+supply_chain_ops:
+  description: Supply chain operations
+  roles: [analyst]
+  departments: [Supply Chain]
+  clearance: internal
+
+finance_analyst:
+  description: Finance analysts
+  roles: [analyst]
+  departments: [Finance]
+  clearance: confidential
+
+executive:
+  description: Executive leadership
+  roles: [executive]
+  clearance: restricted

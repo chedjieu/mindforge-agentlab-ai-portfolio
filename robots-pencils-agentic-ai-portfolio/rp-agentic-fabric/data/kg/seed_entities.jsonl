@@ -1,0 +1,13 @@
+{"id":"client-asu","label":"Client","name":"ASU Demo University","tenant_id":"tenant-asu-demo","vertical":"edtech"}
+{"id":"client-careco","label":"Client","name":"CareCo","tenant_id":"tenant-careco","vertical":"healthcare"}
+{"id":"client-northbank","label":"Client","name":"NorthBank","tenant_id":"tenant-northbank","vertical":"finserv"}
+{"id":"eng-asu-1001","label":"Engagement","name":"Student onboarding","tenant_id":"tenant-asu-demo","vertical":"edtech"}
+{"id":"reg-ferpa","label":"RegulatoryRequirement","name":"FERPA","tenant_id":null,"reusable_ip":true,"vertical":"shared"}
+{"id":"reg-hipaa","label":"RegulatoryRequirement","name":"HIPAA","tenant_id":null,"reusable_ip":true,"vertical":"shared"}
+{"id":"reg-glba","label":"RegulatoryRequirement","name":"GLBA","tenant_id":null,"reusable_ip":true,"vertical":"shared"}
+{"id":"comp-edtech-onboarding","label":"AgentComponent","name":"EdTech onboarding pattern","component_id":"comp-edtech-onboarding","tenant_id":"ip-library","vertical":"edtech","reusable_ip":true,"productized":true,"embeddings_tenant":"prior-tenant-x"}
+{"id":"comp-hc-careops","label":"AgentComponent","name":"Healthcare care-ops pattern","component_id":"comp-hc-careops","tenant_id":"ip-library","vertical":"healthcare","reusable_ip":true,"productized":true,"embeddings_tenant":"prior-tenant-y"}
+{"id":"comp-fs-account","label":"AgentComponent","name":"FinServ account-ops pattern","component_id":"comp-fs-account","tenant_id":"ip-library","vertical":"finserv","reusable_ip":true,"productized":true,"embeddings_tenant":"prior-tenant-z"}
+{"id":"asset-sis","label":"DataAsset","name":"SIS enrollment feed","tenant_id":"tenant-asu-demo","sensitivity":"ferpa","vertical":"edtech"}
+{"id":"risk-cross-tenant","label":"RiskFlag","name":"Cross-tenant leakage","flag_id":"risk-cross-tenant","severity":"critical","reusable_ip":true}
+{"id":"past-asu","label":"PastProject","name":"Canvas enrollment rebuild","tenant_id":"tenant-asu-demo","outcome":"success","vertical":"edtech"}

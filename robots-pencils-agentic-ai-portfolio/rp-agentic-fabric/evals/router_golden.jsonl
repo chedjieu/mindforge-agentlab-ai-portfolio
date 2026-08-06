@@ -1,0 +1,4 @@
+{"brief":{"title":"FERPA student onboarding","body":"Canvas SIS enrollment agent"},"expect_vertical":"edtech"}
+{"brief":{"title":"HIPAA care ops","body":"FHIR patient encounter triage"},"expect_vertical":"healthcare"}
+{"brief":{"title":"GLBA account summarizer","body":"bank SOC2 account ops"},"expect_vertical":"finserv"}
+{"brief":{"title":"Retail personalization","body":"merchant SKU shopper personalization"},"expect_vertical":"retail"}

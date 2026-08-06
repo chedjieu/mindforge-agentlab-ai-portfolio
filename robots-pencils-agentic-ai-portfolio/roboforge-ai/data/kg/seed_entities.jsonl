@@ -1,0 +1,7 @@
+{"id":"app-orders","label":"Application","name":"Order Service","client_id":"client-retailco","domain":"agentic"}
+{"id":"api-orders","label":"API","name":"Orders API","client_id":"client-retailco","domain":"agentic"}
+{"id":"db-orders","label":"DataStore","name":"Orders DB","client_id":"client-retailco","domain":"agentic"}
+{"id":"pii-email","label":"PIIClass","name":"Customer Email","client_id":"shared","reusable":true}
+{"id":"ctrl-encrypt","label":"Control","name":"Encryption at rest","client_id":"shared","reusable":true}
+{"id":"cloud-bedrock","label":"CloudResource","name":"Amazon Bedrock","client_id":"shared","reusable":true,"domain":"agentic"}
+{"id":"pattern-agentcore","label":"ArchitecturePattern","name":"AgentCore supervisor","client_id":"shared","reusable":true,"domain":"agentic"}

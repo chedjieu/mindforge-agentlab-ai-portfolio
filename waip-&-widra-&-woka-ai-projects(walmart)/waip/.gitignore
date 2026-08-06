@@ -1,0 +1,11 @@
+__pycache__/
+.venv/
+*.sqlite
+.env
+data/tickets.jsonl
+data/audit.jsonl
+data/episodic/lessons.jsonl
+.pytest_cache/
+.ruff_cache/
+dist/
+*.egg-info/

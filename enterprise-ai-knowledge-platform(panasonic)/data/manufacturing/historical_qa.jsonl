@@ -1,0 +1,3 @@
+{"query": "What torque for PN-4421 at Osaka?", "answer": "Use SOP-M-105: 12 N·m ± 0.5 at Plant Osaka."}
+{"query": "Which SOP superseded SOP-M-104?", "answer": "SOP-M-105 supersedes SOP-M-104 for PN-4421 torque."}
+{"query": "Seal leak test for PN-4421 Nagoya?", "answer": "SOP-M-220 requires leak rate < 0.5 sccm at 20 kPa."}

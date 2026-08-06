@@ -1,0 +1,3 @@
+{"query": "Change window for payment-service?", "answer": "Tue/Thu 02:00–04:00 UTC per RB-OPS-payment-change."}
+{"query": "SEV1 first steps?", "answer": "Page on-call, open bridge, customer comms in 15 minutes."}
+{"query": "Kafka lag runbook?", "answer": "If lag > 100k, scale consumers and pause non-critical producers."}

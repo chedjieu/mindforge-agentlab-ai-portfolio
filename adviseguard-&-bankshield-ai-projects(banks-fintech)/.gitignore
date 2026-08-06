@@ -1,0 +1,39 @@
+# Cursor local plans / agent context — do not commit
+.cursor/
+**/.cursor/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+dist/
+build/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Secrets & local runtime
+.env
+.env.*
+!.env.example
+checkpoints.sqlite
+checkpoints.sqlite-*
+*.db
+mlruns/
+**/data/**/*.log
+*.log
+
+# Locks are committed for reproducible builds (do not ignore uv.lock)
+!**/uv.lock
