@@ -6,7 +6,7 @@
 
 As-built v1 is an umbrella **Healthcare Decision Intelligence Platform** (LangGraph, GraphRAG, multi-agent reasoning): prior auth, claims denial prevention, clinical CDS, care coordination, knowledge Q&A, fraud scoring, population health, and RCM coding assist. HEDIS-style quality performance is the suite thesis and lands on the population-health, claims, RCM, and knowledge domains.
 
-Suite plans: [plan-overview](../.cursor/plan-overview.md) · [plan-hedip](../.cursor/plan-hedip.md).
+Suite landing page: [../README.md](../README.md). As-built: [AS_BUILT.md](AS_BUILT.md) · [docs/SYSTEM_DESIGN.md](docs/SYSTEM_DESIGN.md).
 
 ## Quick start
 

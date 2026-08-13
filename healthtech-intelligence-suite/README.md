@@ -2,23 +2,63 @@
 
 An integrated enterprise ecosystem for AI-driven patient care navigation, quality measure performance tracking, and risk adjustment analytics.
 
-**Portfolio path:** [`healthtech-intelligence-suite/`](../healthtech-intelligence-suite/) — public GitHub tree with no `&` in the URL so CarePath, HEDIP, and RAIP are all browsable.
-
 The three packages are **sister projects** — shared LangGraph / GraphRAG / HITL patterns, **no runtime imports** across packages.
 
-Execution plans: [`.cursor/plan-overview.md`](.cursor/plan-overview.md) · [plan-carepath-ai.md](.cursor/plan-carepath-ai.md) · [plan-hedip.md](.cursor/plan-hedip.md) · [plan-raip.md](.cursor/plan-raip.md).
-
-## Sister projects
-
-| Project | Domain | Key capabilities | Port |
-| :--- | :--- | :--- | ---: |
-| **[CarePath AI](./carepath-ai)** | Clinical AI and care pathways | AI-guided care plans, patient navigation, clinician HITL, medication-safety checks | **8007** |
-| **[HEDI Platform](./hedip)** | HEDIS and quality metrics | Healthcare Effectiveness Data and Information performance tracking, prior auth, claims, population risk, coding assist | **8009** |
-| **[RAIP Engine](./raip)** | Risk adjustment and incentives | Evidence-grounded documentation, claim-level provenance, HCC/RAF-ready authoring path, publication blocking on unsupported claims | **8011** |
+| Project | Domain | Port | Docs |
+| :--- | :--- | ---: | :--- |
+| **[CarePath AI](./carepath-ai)** | Care pathways and clinical decision support | **8007** | [README](carepath-ai/README.md) · [AS_BUILT](carepath-ai/AS_BUILT.md) · [System design](carepath-ai/docs/SYSTEM_DESIGN.md) |
+| **[HEDI Platform](./hedip)** | Quality / HEDIS-oriented decision intelligence | **8009** | [README](hedip/README.md) · [AS_BUILT](hedip/AS_BUILT.md) · [System design](hedip/docs/SYSTEM_DESIGN.md) |
+| **[RAIP Engine](./raip)** | Risk adjustment and evidence-grounded authoring | **8011** | [README](raip/README.md) · [AS_BUILT](raip/AS_BUILT.md) · [System design](raip/docs/SYSTEM_DESIGN.md) · [Implementation plan](raip/docs/IMPLEMENTATION_PLAN.md) |
 
 **How they relate:** CarePath produces a defensible care pathway. HEDIP evaluates quality, utilization, and payer/provider decisions for the same member population. RAIP grounds the documentation and coding narrative in approved sources so quality and risk-adjustment artifacts can be cited and audited. None of the three calls another at runtime.
 
 Workspace as-built: [AS_BUILT.md](AS_BUILT.md).
+
+---
+
+## CarePath AI
+
+Personalized treatment-plan generation for complex chronic-care patients. LangGraph supervisor → extract → medication check → plan → preferences → safety judge → HITL publish.
+
+```powershell
+cd carepath-ai
+uv sync --python 3.12
+$env:CAREPATH_MODEL = "fake"
+uv run python -m app.main
+```
+
+Open [http://127.0.0.1:8007](http://127.0.0.1:8007) — golden patient **P001** (T2DM + HTN + 6 meds).
+
+---
+
+## HEDI Platform
+
+Umbrella healthcare decision intelligence: prior auth, claims, clinical CDS, care coordination, knowledge Q&A, fraud, population health, and RCM coding assist. Quality / HEDIS performance is the suite thesis on the pop-health, claims, RCM, and knowledge domains.
+
+```powershell
+cd hedip
+uv sync --python 3.12
+$env:HEDIP_MODEL = "fake"
+uv run python -m app.main
+```
+
+Open [http://127.0.0.1:8009](http://127.0.0.1:8009)
+
+---
+
+## RAIP Engine
+
+Evidence-first authoring of clinical and regulatory document sections. Generation is subordinate to retrieved, versioned evidence. Unsupported claims cannot publish. HCC / RAF documentation is the next slice on the same publication gate.
+
+```bash
+cd raip
+bash scripts/sync.sh
+bash scripts/run.sh
+```
+
+Open [http://127.0.0.1:8011](http://127.0.0.1:8011)
+
+---
 
 ## Workspace setup
 
@@ -27,15 +67,9 @@ git clone --recursive <repository-url> mindforge-agentlab-ai-portfolio
 cd mindforge-agentlab-ai-portfolio/healthtech-intelligence-suite
 ```
 
-**Prerequisites**
-
-- Python **3.12** and [uv](https://github.com/astral-sh/uv) on `PATH`
-- Optional: Docker Desktop for shared Neo4j / Postgres (`docker compose up -d`)
-- Optional: AWS/GCP credentials for Bedrock / Vertex (otherwise use `*_MODEL=fake`)
+**Prerequisites:** Python **3.12**, [uv](https://github.com/astral-sh/uv) on `PATH`. Optional: Docker Desktop, AWS/GCP credentials (otherwise use `*_MODEL=fake`).
 
 ### Docker (all three stacks)
-
-From this directory:
 
 ```bash
 docker compose up -d
@@ -50,51 +84,9 @@ docker compose ps
 
 CarePath and HEDIP apps still run with `uv`. RAIP's compose stack also builds API (`8011`) and worker.
 
-### Quick start — CarePath AI
-
-```powershell
-cd carepath-ai
-uv sync --python 3.12
-$env:CAREPATH_MODEL = "fake"
-uv run python -m app.main
-```
-
-Open [http://127.0.0.1:8007](http://127.0.0.1:8007) — golden patient **P001**.
-
-### Quick start — HEDI Platform
-
-```powershell
-cd hedip
-uv sync --python 3.12
-$env:HEDIP_MODEL = "fake"
-uv run python -m app.main
-```
-
-Open [http://127.0.0.1:8009](http://127.0.0.1:8009)
-
-### Quick start — RAIP Engine
-
-```bash
-cd raip
-bash scripts/sync.sh
-bash scripts/run.sh
-```
-
-Open [http://127.0.0.1:8011](http://127.0.0.1:8011)
-
 ## Quality gates
 
-From this directory, with a model env var set, the same commands the packages use are forwarded into that sister project (`RAIP_MODEL` → `raip/`, `CAREPATH_MODEL` → `carepath-ai/`, `HEDIP_MODEL` → `hedip/`). If none is set, all three run.
-
-```powershell
-$env:RAIP_MODEL = "fake"
-uv sync --python 3.12
-uv run pytest
-uv run python -m evals.run_all
-uv run python -m security.injection_eval
-```
-
-On this Windows machine `uv run` often cannot spawn `*\Scripts\python.exe` (Access is denied). Use the uv-managed interpreter instead:
+From this directory, a model env var selects the sister project (`RAIP_MODEL` → `raip/`, `CAREPATH_MODEL` → `carepath-ai/`, `HEDIP_MODEL` → `hedip/`). If none is set, all three run.
 
 ```powershell
 $env:RAIP_MODEL = "fake"
@@ -103,18 +95,16 @@ $env:RAIP_MODEL = "fake"
 .\scripts\with-python.ps1 -m security.injection_eval
 ```
 
-Or `cd` into `carepath-ai`, `hedip`, or `raip` and run the package commands there. Injection suites must pass **≥ 95%** before promote.
+On Windows, `uv run` often cannot spawn `*\Scripts\python.exe` (Access is denied). Use `scripts/with-python.ps1` as above, or `cd` into a package. Injection suites must pass **≥ 95%** before promote.
 
 ## Layout
 
 ```text
 healthtech-intelligence-suite/
-├── .cursor/                  # suite execution plans
-├── carepath-ai/              # CarePath AI
-├── hedip/                    # HEDI Platform
-├── raip/                     # RAIP Engine
-├── docker-compose.yml        # shared local infra
-├── .gitignore
+├── carepath-ai/
+├── hedip/
+├── raip/
+├── docker-compose.yml
 ├── AS_BUILT.md
 └── README.md
 ```

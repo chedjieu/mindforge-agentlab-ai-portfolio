@@ -6,7 +6,7 @@
 
 As-built v1 ships as the **ReguMed Authoring Intelligence Platform**: clinical, regulatory, medical-writing, and quality teams draft document **sections** from approved source PDFs and templates while enforcing evidence grounding, provenance, citation traceability, contradiction detection, and human approval before publication. HCC validation, RAF narratives, and quality-incentive gap analysis are the suite thesis and must use the same publication gate (unsupported codes/claims cannot publish).
 
-Suite plans: [plan-overview](../.cursor/plan-overview.md) · [plan-raip](../.cursor/plan-raip.md).
+Suite landing page: [../README.md](../README.md). As-built: [AS_BUILT.md](AS_BUILT.md) · [docs/SYSTEM_DESIGN.md](docs/SYSTEM_DESIGN.md) · [docs/IMPLEMENTATION_PLAN.md](docs/IMPLEMENTATION_PLAN.md).
 
 **No production PHI is included.** All sample content is synthetic.
 

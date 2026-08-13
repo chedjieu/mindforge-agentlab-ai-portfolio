@@ -5,7 +5,7 @@
 **UIs:** CarePath Clinician Console `8007` · HEDIP Command Center `8009` · RAIP review console `8011`
 
 Per-project detail: [carepath-ai/AS_BUILT.md](carepath-ai/AS_BUILT.md) · [hedip/AS_BUILT.md](hedip/AS_BUILT.md) · [raip/AS_BUILT.md](raip/AS_BUILT.md).  
-Suite plans: [.cursor/plan-overview.md](.cursor/plan-overview.md).
+Landing page: [README.md](README.md).
 
 ---
 
@@ -122,4 +122,5 @@ UI (FastAPI console)
 | CarePath design | [carepath-ai/docs/](carepath-ai/docs/) |
 | HEDIP README / as-built | [hedip/README.md](hedip/README.md), [hedip/AS_BUILT.md](hedip/AS_BUILT.md) |
 | HEDIP design | [hedip/docs/](hedip/docs/) |
-| Plans | [.cursor/plans/](.cursor/plans/) |
+| RAIP README / as-built | [raip/README.md](raip/README.md), [raip/AS_BUILT.md](raip/AS_BUILT.md) |
+| RAIP design | [raip/docs/SYSTEM_DESIGN.md](raip/docs/SYSTEM_DESIGN.md), [raip/docs/IMPLEMENTATION_PLAN.md](raip/docs/IMPLEMENTATION_PLAN.md) |
