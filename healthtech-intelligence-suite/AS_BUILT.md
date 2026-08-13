@@ -1,6 +1,6 @@
 # As-Built — HealthTech Intelligence Suite
 
-**Workspace:** HealthTech Intelligence Suite (canonical directory `healthtech-intelligence-suite/`)  
+**Workspace:** HealthTech Intelligence Suite (`healthtech-intelligence-suite/`)  
 **Packages:** `carepath-ai` · `hedip` · `raip`  
 **UIs:** CarePath Clinician Console `8007` · HEDIP Command Center `8009` · RAIP review console `8011`
 
