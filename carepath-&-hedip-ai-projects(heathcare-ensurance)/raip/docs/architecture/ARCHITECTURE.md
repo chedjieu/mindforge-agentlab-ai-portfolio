@@ -6,6 +6,8 @@ Canonical index. Locked as-built: [`../../AS_BUILT.md`](../../AS_BUILT.md). ADRs
 
 | Document | Use when |
 |----------|----------|
+| [../SYSTEM_DESIGN.md](../SYSTEM_DESIGN.md) | Problem, use cases, metrics, safety, deploy |
+| [../IMPLEMENTATION_PLAN.md](../IMPLEMENTATION_PLAN.md) | v1 build order and next slices |
 | [HIGH_LEVEL.md](HIGH_LEVEL.md) | System context, containers, workflow, trust, publication policy |
 | [LOW_LEVEL.md](LOW_LEVEL.md) | Packages, LangGraph routing, ingest, retrieval, claims, schema, APIs |
 | [LOCAL_VS_PRODUCTION.md](LOCAL_VS_PRODUCTION.md) | Honest local vs production matrix |

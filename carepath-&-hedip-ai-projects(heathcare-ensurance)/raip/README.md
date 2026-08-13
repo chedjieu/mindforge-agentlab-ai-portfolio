@@ -44,6 +44,8 @@ Critical safety failure **overrides** a high aggregate quality score. Unsupporte
 | Doc | Purpose |
 |-----|---------|
 | [AS_BUILT.md](AS_BUILT.md) | What is implemented vs documented-only |
+| [docs/SYSTEM_DESIGN.md](docs/SYSTEM_DESIGN.md) | Problem, use cases, knowledge plane, safety, deploy |
+| [docs/IMPLEMENTATION_PLAN.md](docs/IMPLEMENTATION_PLAN.md) | v1 phases (shipped) and next risk-adjustment slices |
 | [docs/architecture/HIGH_LEVEL.md](docs/architecture/HIGH_LEVEL.md) | Context, containers, trust, publication policy |
 | [docs/architecture/LOW_LEVEL.md](docs/architecture/LOW_LEVEL.md) | Graph, ingest, retrieval, schema, APIs |
 | [docs/architecture/ARCHITECTURE.md](docs/architecture/ARCHITECTURE.md) | Architecture index |
