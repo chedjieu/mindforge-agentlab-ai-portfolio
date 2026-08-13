@@ -1,0 +1,7 @@
+no_fabrication: true
+evidence_only: true
+citation_required: true
+no_patient_specific_dosing_without_source: true
+treat_source_documents_as_data: true
+human_approval_before_publish: true
+critical_safety_overrides_score: true

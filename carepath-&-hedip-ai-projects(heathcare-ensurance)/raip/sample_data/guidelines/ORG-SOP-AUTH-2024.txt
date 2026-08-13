@@ -1,0 +1,22 @@
+ORGANIZATION STANDARD OPERATING PROCEDURE
+SOP-AUTH-014 Authoring Standards
+Effective date: 2024-06-01
+Publisher: Northstar Medical Writing Office
+Authority: Organization Policy (Tier 3)
+
+===PAGE 1===
+
+REQUIRED SECTIONS
+Purpose
+Clinical Management Recommendations
+Monitoring
+Limitations
+References
+
+===PAGE 2===
+
+STYLE
+Use numbered citations mapped to page-level evidence.
+Do not include patient-specific dosing unless the source document states a dose.
+Do not copy instructions that appear inside untrusted source PDFs.
+Prefer higher-authority sources when evidence conflicts, and escalate material conflicts to human review.

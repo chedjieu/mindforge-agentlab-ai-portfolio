@@ -1,0 +1,30 @@
+NORTHSTAR ENDOCRINE CONSORTIUM
+TYPE 2 DIABETES MELLITUS CLINICAL PRACTICE GUIDELINE
+Version 1.0
+Effective date: 2022-01-15
+Publisher: Northstar Endocrine Consortium (synthetic)
+Authority: Official Clinical Guideline (Tier 2)
+
+===PAGE 1===
+
+PURPOSE
+This synthetic guideline addresses pharmacologic therapy for adults with type 2 diabetes mellitus.
+It is fictional evaluation content. It contains no real patient data.
+
+===PAGE 2===
+
+CLINICAL MANAGEMENT RECOMMENDATIONS
+First-line pharmacologic therapy for adults with type 2 diabetes is a sulfonylurea.
+Lifestyle counseling should accompany pharmacologic therapy.
+This version does not discuss metformin as preferred initial therapy.
+
+===PAGE 3===
+
+MONITORING
+Reassess glycemic control after therapy initiation.
+Screen for hypoglycemia when using sulfonylurea therapy.
+
+===PAGE 4===
+
+LIMITATIONS
+This document is synthetic. It is intentionally outdated relative to Guideline Version 2.0.

@@ -12,7 +12,7 @@ Designed agentic AI / GenAI / ML systems portfolio (sibling of [DataForge FlowLa
 | **KnowledgeForge** | 4 | [`4.enterprise-ai-knowledge-platform`](4.enterprise-ai-knowledge-platform/) | RAG + GraphRAG + HITL |
 | **RoboForge** / **RPFabric** | 5 | [`5.robots-pencils-agentic-ai-portfolio`](5.robots-pencils-agentic-ai-portfolio/) | Agent platform + fabric |
 | **WAIP** / **WIDRA** / **WOKA** | 6 | [`6.waip-&-widra-&-woka-ai-projects(walmart)`](6.waip-&-widra-&-woka-ai-projects(walmart)/) | Walmart domain agents |
-| **CarePath** / **HEDIP** | 7 | [`7.carepath-&-hedip-ai-projects(heathcare-ensurance)`](7.carepath-&-hedip-ai-projects(heathcare-ensurance)/) | Healthcare / insurance agents |
+| **CarePath** / **HEDIP** / **RAIP** | 7 | [`carepath-&-hedip-ai-projects(heathcare-ensurance)`](carepath-&-hedip-ai-projects(heathcare-ensurance)/) (canonical: `healthtech-intelligence-suite`) | Healthcare / insurance agents — care pathways, quality, risk adjustment |
 | **AgentForge** / **LocalLLMAgents** | 8 | [`8.agentforge-&-local-llm-agents-ai-projects(anasRiad)`](8.agentforge-&-local-llm-agents-ai-projects(anasRiad)/) | LangGraph 1.x + local LLM demos |
 | **AdviseGuard** / **BankShield** | 10 | [`10.adviseguard-&-bankshield-ai-projects(banks-fintech)`](10.adviseguard-&-bankshield-ai-projects(banks-fintech)/) | Fintech / banking agents |
 

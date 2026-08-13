@@ -1,0 +1,26 @@
+REGULATORY SUBSTANTIATION GUIDANCE
+Document ID: REG-SUB-2024
+Effective date: 2024-01-01
+Publisher: Synthetic Health Products Authority
+Authority: Regulatory / Government Authority (Tier 1)
+
+===PAGE 1===
+
+PURPOSE
+Promotional and clinical claims in regulated documents must be substantiated by cited evidence.
+Unsupported medical or regulatory statements are a high-severity failure.
+
+===PAGE 2===
+
+REQUIREMENTS
+Do not invent clinical recommendations.
+Do not cite a generic source.
+Do not fabricate a citation.
+If evidence is insufficient, the authoring system must state that additional authoritative evidence is required.
+Outdated guidance that has been superseded must not be presented as current.
+
+===PAGE 3===
+
+DISCLOSURES
+Drafts are assistive authoring artifacts. Human review is required before publication.
+This document is synthetic evaluation content and is not an official government regulation.

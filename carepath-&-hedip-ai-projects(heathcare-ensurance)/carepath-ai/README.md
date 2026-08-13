@@ -1,15 +1,21 @@
 # CarePath AI
 
-AI-powered **multi-agent** personalized treatment plan generation for complex chronic-care patients.
+AI-driven **patient care pathway** and **clinical decision support** for complex chronic-care patients.
+
+**HealthTech Intelligence Suite** sister of **[HEDI Platform](../hedip/README.md)** (quality / HEDIS performance) and **[RAIP Engine](../raip/README.md)** (risk adjustment and evidence-grounded documentation). CarePath stays clinical-only and does **not** call HEDIP or RAIP at runtime.
 
 LangGraph supervisor → patient data extraction → medication interaction check → plan generation → preference incorporation → safety judge → HITL-gated publish.
 
 Dual deploy: **Bedrock AgentCore** + **Vertex AI Agent Engine**.
 
+Suite plans: [plan-overview](../.cursor/plan-overview.md) · [plan-carepath-ai](../.cursor/plan-carepath-ai.md).
+
 ## Quick start
 
+From the suite root:
+
 ```powershell
-cd "c:\Users\deched\projects(ml-ai)\0.ide_vs-code_&_cursor\10.healthcare-insurance\carepath-ai"
+cd carepath-ai
 $env:PATH = "$env:USERPROFILE\.local\bin;$env:PATH"
 uv sync --python 3.12
 $env:CAREPATH_MODEL = "fake"
@@ -18,6 +24,8 @@ uv run python -m app.main
 ```
 
 Open [http://127.0.0.1:8007](http://127.0.0.1:8007)
+
+Local Neo4j / Postgres (from suite root): `docker compose up -d` — CarePath maps **5435** (Postgres) and **7475 / 7688** (Neo4j).
 
 ## Quality gates
 
@@ -46,6 +54,8 @@ See [AS_BUILT.md](AS_BUILT.md), [docs/architecture.md](docs/architecture.md), [d
 
 > Select patient **P001** (T2DM + HTN + 6 meds). Preferences: avoid injectable GLP-1. Generate treatment plan. Approve the HITL card to publish.
 
+Downstream in the suite: the same member can be reviewed in HEDIP for quality / utilization gaps, then documented in RAIP with claim-level citations — copy the narrative, do not wire a runtime mesh.
+
 ## Cloud models (optional)
 
 ```powershell
@@ -72,10 +82,8 @@ GitHub Actions (`.github/workflows/ci.yml`) runs on push/PR:
 - `evals/run_all.py` with `*_MODEL=fake` (if present)
 - injection suite ≥ 95% (if present)
 
-Locally: same commands from the package root.
-
 ### Roadmap to excellent
 
-- Shared composite action for `uv` + ruff + pytest across sibling packages
+- Shared composite action for `uv` + ruff + pytest across sister packages
 - Nightly LangSmith eval runs (non-fake models) on a schedule
 - `uv pip audit` / dependency vulnerability gate in CI

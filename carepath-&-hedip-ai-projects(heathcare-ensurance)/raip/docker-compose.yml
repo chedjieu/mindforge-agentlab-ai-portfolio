@@ -1,0 +1,77 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: raip
+      POSTGRES_PASSWORD: raip
+      POSTGRES_DB: raip
+    ports:
+      - "5432:5432"
+    volumes:
+      - raip_pg:/var/lib/postgresql/data
+      - ./infrastructure/docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U raip -d raip"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  neo4j:
+    image: neo4j:5.26-community
+    environment:
+      NEO4J_AUTH: neo4j/changeme123
+      NEO4J_PLUGINS: '["apoc"]'
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - raip_neo4j:/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:7474 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      RAIP_MODEL: fake
+      RAIP_JUDGE_MODEL: fake
+      RAIP_EMBEDDINGS: fake
+      RAIP_DATABASE_URL: postgresql+psycopg2://raip:raip@postgres:5432/raip
+      RAIP_OBJECT_ROOT: /data/objects
+      NEO4J_URI: bolt://neo4j:7687
+      NEO4J_USER: neo4j
+      NEO4J_PASSWORD: changeme123
+      RAIP_PORT: "8011"
+      RAIP_HITL: required
+    ports:
+      - "8011:8011"
+    volumes:
+      - raip_objects:/data/objects
+    command: ["uv", "run", "python", "-m", "app.main"]
+
+  worker:
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      RAIP_MODEL: fake
+      RAIP_EMBEDDINGS: fake
+      RAIP_DATABASE_URL: postgresql+psycopg2://raip:raip@postgres:5432/raip
+      RAIP_OBJECT_ROOT: /data/objects
+      NEO4J_URI: bolt://neo4j:7687
+      NEO4J_USER: neo4j
+      NEO4J_PASSWORD: changeme123
+    volumes:
+      - raip_objects:/data/objects
+    command: ["uv", "run", "python", "-m", "app.worker"]
+
+volumes:
+  raip_pg:
+  raip_neo4j:
+  raip_objects:

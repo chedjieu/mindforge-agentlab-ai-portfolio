@@ -1,6 +1,11 @@
 # IDE / agent local state
-.cursor/
+.cursor/*
+!.cursor/plan-overview.md
+!.cursor/plan-carepath-ai.md
+!.cursor/plan-hedip.md
+!.cursor/plan-raip.md
 .vscode/
+.idea/
 
 # OS
 .DS_Store

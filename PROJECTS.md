@@ -18,8 +18,9 @@ Each **Name** is the canonical single product id. Package folder paths with `&` 
 | **WAIP** | `6…/waip` | Walmart AI intake / planning |
 | **WIDRA** | `6…/widra` | Walmart document / retrieval agent |
 | **WOKA** | `6…/woka` | Walmart ops / knowledge agent |
-| **CarePath** | `7…/carepath-ai` | Healthcare pathway agent |
-| **HEDIP** | `7…/hedip` | Healthcare / insurance data + agent |
+| **CarePath** | `healthtech-intelligence-suite/carepath-ai` (path alias: `carepath-&-hedip-ai-projects(heathcare-ensurance)/carepath-ai`) | Healthcare pathway / clinical CDS agent |
+| **HEDIP** | `healthtech-intelligence-suite/hedip` | HEDI quality / decision intelligence platform |
+| **RAIP** | `healthtech-intelligence-suite/raip` | Risk adjustment / evidence-first authoring engine |
 | **AgentForge** | `8…/agentforge` | LangGraph 1.x agent framework |
 | **LocalLLMAgents** | `8…/local-llm-agents` | Local LLM agent demos |
 | **AdviseGuard** | `10…/adviseguard-ai` | Fintech advisory guardrails |

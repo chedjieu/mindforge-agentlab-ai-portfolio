@@ -1,21 +1,23 @@
-# As-Built — CarePath AI & HEDIP Workspace
+# As-Built — HealthTech Intelligence Suite
 
-**Workspace:** CarePath AI + HEDIP (healthcare / insurance agentic platforms)  
-**Packages:** `carepath-ai` v0.1.0 · `hedip` v0.1.0  
-**UIs:** CarePath Clinician Console `8007` · HEDIP Command Center `8009`
+**Workspace:** HealthTech Intelligence Suite (canonical directory `healthtech-intelligence-suite/`)  
+**Packages:** `carepath-ai` · `hedip` · `raip`  
+**UIs:** CarePath Clinician Console `8007` · HEDIP Command Center `8009` · RAIP review console `8011`
 
-Per-project detail: [carepath-ai/AS_BUILT.md](carepath-ai/AS_BUILT.md) · [hedip/AS_BUILT.md](hedip/AS_BUILT.md).
+Per-project detail: [carepath-ai/AS_BUILT.md](carepath-ai/AS_BUILT.md) · [hedip/AS_BUILT.md](hedip/AS_BUILT.md) · [raip/AS_BUILT.md](raip/AS_BUILT.md).  
+Suite plans: [.cursor/plan-overview.md](.cursor/plan-overview.md).
 
 ---
 
 ## Purpose
 
-This workspace holds two sibling interview-grade / portfolio systems that share the same platform stack (LangGraph orchestration, hybrid RAG, Neo4j GraphRAG, memory layers, firewall + judges, HITL, dual-cloud deploy) but different product scopes:
+This workspace holds three sister interview-grade / portfolio systems that share the same platform stack (LangGraph orchestration, hybrid RAG, Neo4j GraphRAG, memory layers, firewall + judges, HITL, dual-cloud deploy) but different product scopes:
 
 | System | Scope |
 |--------|--------|
 | **CarePath AI** | Clinical-only personalized treatment plan generation for complex chronic-care patients |
-| **HEDIP** | Umbrella multi-domain decision intelligence: prior auth, claims, CDS, care coord, knowledge, fraud, pop health, RCM |
+| **HEDI Platform (HEDIP)** | Umbrella multi-domain decision intelligence: prior auth, claims, CDS, care coord, knowledge, fraud, pop health, RCM (quality / HEDIS thesis) |
+| **RAIP Engine** | Evidence-first authoring (ReguMed) with claim-level provenance; risk-adjustment / incentive documentation is the suite thesis |
 
 ---
 
@@ -23,10 +25,10 @@ This workspace holds two sibling interview-grade / portfolio systems that share 
 
 | Area | Decision |
 |------|----------|
-| Relationship | **Siblings** — HEDIP does not import or call `carepath-ai`; CDS is reimplemented inside HEDIP |
+| Relationship | **Siblings** — no package imports another; HEDIP CDS is a reimplementation, not a call to CarePath |
 | Orchestration | LangGraph supervisors; workers never peer-route |
-| Ports | CarePath **8007** · HEDIP **8009** (reserve 8008 for a possible thin PA-only split) |
-| Env prefixes | `CAREPATH_*` vs `HEDIP_*` (no shared env namespace) |
+| Ports | CarePath **8007** · HEDIP **8009** · RAIP **8011** (reserve 8008 for a possible thin PA-only split) |
+| Env prefixes | `CAREPATH_*` vs `HEDIP_*` vs `RAIP_*` (no shared env namespace)
 | Offline / CI | `*_MODEL=fake` on both |
 | Judges | Cross-provider when both Bedrock and Vertex are configured |
 | RAG | Hybrid BM25 + dense; Neo4j when `NEO4J_URI` set, else JSONL KG seeds |
@@ -41,8 +43,8 @@ This workspace holds two sibling interview-grade / portfolio systems that share 
 1. Workers never call each other — only supervisors / domain routers.  
 2. Sensitive clinical / payer decisions always require HITL before publish.  
 3. Factual / policy / clinical claims require citations from retrieval or KG paths.  
-4. CarePath stays standalone; HEDIP must not become a runtime dependency of CarePath or vice versa.  
-5. Injection suites stay ≥95% on both packages before deploy promote.
+4. CarePath stays standalone; HEDIP and RAIP must not become runtime dependencies of each other or of CarePath.  
+5. Injection suites stay ≥95% on all three packages before deploy promote.
 
 ---
 

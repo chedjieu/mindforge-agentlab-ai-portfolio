@@ -1,0 +1,45 @@
+# Workspace root compose — run from this directory:
+#   docker compose up -d
+#
+# CarePath / HEDIP: local Neo4j + Postgres only (apps still run via uv).
+# RAIP: included as a nested stack (Postgres, Neo4j, API, worker).
+name: healthtech-intelligence-suite
+
+include:
+  - path: ./raip/docker-compose.yml
+    project_directory: ./raip
+
+services:
+  carepath-neo4j:
+    image: neo4j:5
+    ports:
+      - "7475:7474"
+      - "7688:7687"
+    environment:
+      NEO4J_AUTH: neo4j/password
+
+  carepath-postgres:
+    image: postgres:16
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_USER: carepath
+      POSTGRES_PASSWORD: carepath
+      POSTGRES_DB: carepath
+
+  hedip-neo4j:
+    image: neo4j:5
+    ports:
+      - "7476:7474"
+      - "7689:7687"
+    environment:
+      NEO4J_AUTH: neo4j/password
+
+  hedip-postgres:
+    image: postgres:16
+    ports:
+      - "5436:5432"
+    environment:
+      POSTGRES_USER: hedip
+      POSTGRES_PASSWORD: hedip
+      POSTGRES_DB: hedip

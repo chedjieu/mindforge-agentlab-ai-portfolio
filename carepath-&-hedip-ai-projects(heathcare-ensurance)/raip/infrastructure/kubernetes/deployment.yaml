@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: raip-api
+  labels:
+    app: raip
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: raip
+  template:
+    metadata:
+      labels:
+        app: raip
+    spec:
+      containers:
+        - name: api
+          image: raip:0.1.0
+          ports:
+            - containerPort: 8011
+          env:
+            - name: RAIP_MODEL
+              value: "fake"
+            - name: RAIP_PORT
+              value: "8011"
+---
+# Sketch only. Wire probes to /health and /ready in a real cluster.

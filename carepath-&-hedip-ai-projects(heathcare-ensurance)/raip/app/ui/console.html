@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>RAIP Review Console</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --panel: #171e27;
+      --ink: #e8eef4;
+      --muted: #8b9aab;
+      --line: #2a3542;
+      --accent: #3d9a8c;
+      --warn: #d4a017;
+      --fail: #d45d4c;
+      --ok: #3d9a8c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg); color: var(--ink); height: 100vh; display: flex; flex-direction: column;
+    }
+    header {
+      display: flex; align-items: center; gap: 16px; padding: 10px 16px;
+      border-bottom: 1px solid var(--line); background: #12181f;
+    }
+    header h1 { font-size: 15px; margin: 0; letter-spacing: .04em; }
+    header .tag { color: var(--muted); font-size: 12px; }
+    .actions { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+    button, select {
+      background: #243040; color: var(--ink); border: 1px solid var(--line);
+      padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;
+    }
+    button.primary { background: var(--accent); color: #06221e; border: 0; font-weight: 600; }
+    .grid { display: grid; grid-template-columns: 1fr 1.3fr 1.1fr; flex: 1; min-height: 0; }
+    .pane { border-right: 1px solid var(--line); overflow: auto; padding: 12px 14px; }
+    .pane h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 10px; }
+    .scorebar { display: flex; gap: 8px; padding: 8px 16px; border-bottom: 1px solid var(--line); font-size: 12px; flex-wrap: wrap; }
+    .pill { padding: 2px 8px; border-radius: 99px; background: #243040; }
+    .pill.fail { background: #3a1f1c; color: #f0b8b0; }
+    .pill.ok { background: #16332e; color: #b6ebe3; }
+    .claim { border: 1px solid var(--line); padding: 8px; margin: 8px 0; border-radius: 4px; font-size: 12px; }
+    .claim.SUPPORTED { border-left: 3px solid var(--ok); }
+    .claim.UNSUPPORTED, .claim.CONTRADICTED { border-left: 3px solid var(--fail); }
+    .claim.PARTIALLY_SUPPORTED { border-left: 3px solid var(--warn); }
+    .claim.NOT_APPLICABLE { border-left: 3px solid var(--muted); }
+    pre, .draft { white-space: pre-wrap; font-size: 13px; line-height: 1.45; }
+    .excerpt { color: var(--muted); font-size: 11px; margin-top: 6px; }
+    footer { padding: 6px 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+    textarea { width: 100%; min-height: 70px; background: #10161c; color: var(--ink); border: 1px solid var(--line); }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>ReguMed Authoring Intelligence Platform</h1>
+      <div class="tag">Evidence-first authoring · generation subordinate to evidence · no PHI</div>
+    </div>
+    <div class="actions">
+      <button class="primary" onclick="run('golden')">Golden path</button>
+      <button onclick="run('injection')">PDF injection</button>
+      <button onclick="run('contradiction')">Supersession</button>
+      <button onclick="run('unsupported')">Unsupported claim</button>
+      <button onclick="approve()">Approve</button>
+      <button onclick="reject()">Reject</button>
+    </div>
+  </header>
+  <div class="scorebar" id="scores">Waiting for a draft…</div>
+  <div class="grid">
+    <div class="pane">
+      <h2>Section / sources</h2>
+      <div id="left"></div>
+    </div>
+    <div class="pane">
+      <h2>Draft</h2>
+      <div class="draft" id="draft"></div>
+    </div>
+    <div class="pane">
+      <h2>Claims, evidence, provenance</h2>
+      <div id="right"></div>
+    </div>
+  </div>
+  <footer id="foot">Port 8011 · RAIP_MODEL=fake for CI · HIPAA-ready patterns, not certification</footer>
+  <script>
+    let threadId = null;
+    let timer = null;
+    async function run(scenario) {
+      const r = await fetch('/authoring/draft', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({scenario})
+      });
+      const j = await r.json();
+      threadId = j.thread_id;
+      document.getElementById('foot').textContent = 'thread ' + threadId + ' · request ' + j.request_id;
+      poll();
+    }
+    async function poll() {
+      if (timer) clearInterval(timer);
+      timer = setInterval(async () => {
+        if (!threadId) return;
+        const r = await fetch('/status/' + threadId);
+        const j = await r.json();
+        render(j);
+        if (j.status === 'completed' || j.status === 'failed' || j.status === 'pending_hitl') {
+          /* keep polling lightly for HITL */
+        }
+      }, 800);
+    }
+    function pill(label, ok) {
+      return `<span class="pill ${ok ? 'ok' : 'fail'}">${label}</span>`;
+    }
+    function render(j) {
+      const s = j.scores || {};
+      const blocked = s.publication_blocked !== false && s.decision !== 'PASS_PENDING_HITL';
+      document.getElementById('scores').innerHTML =
+        pill('status ' + (j.workflow_status || j.status), j.status !== 'failed') +
+        pill('grounding ' + ((s.grounding || 0) * 100 | 0) + '%', (s.grounding || 0) >= 0.8) +
+        pill('citation ' + ((s.citation || 0) * 100 | 0) + '%', (s.citation || 0) >= 0.8) +
+        pill('safety ' + ((s.safety || 0) * 100 | 0) + '%', s.safety >= 1) +
+        pill(s.critical_safety_failure ? 'CRITICAL SAFETY FAIL' : 'no critical fail', !s.critical_safety_failure) +
+        pill(blocked || s.publication_blocked ? 'PUBLICATION BLOCKED' : 'gates pending HITL', !(blocked || s.publication_blocked));
+      const ev = (j.evidence || []).slice(0, 8).map(e =>
+        `<div class="claim"><strong>${e.title}</strong> v${e.version_number} · p.${e.page_number} · ${e.authority_tier}` +
+        `${e.superseded ? ' · SUPERSEDED' : ''}<div class="excerpt">${(e.text || '').slice(0, 220)}</div></div>`
+      ).join('');
+      document.getElementById('left').innerHTML =
+        `<p class="excerpt">Query / section drafting for Clinical Management Recommendations.</p>${ev}`;
+      document.getElementById('draft').textContent = j.draft || (j.error || '…');
+      const claims = (j.claims || []).map(c =>
+        `<div class="claim ${c.support_status}"><strong>${c.claim_id}</strong> · ${c.support_status} · conf ${(c.confidence || 0).toFixed(2)}` +
+        `<div>${c.claim}</div>` +
+        (c.evidence || []).slice(0, 2).map(x => `<div class="excerpt">[${x.citation}] ${x.excerpt || ''}</div>`).join('') +
+        `</div>`
+      ).join('');
+      const prov = j.provenance || {};
+      document.getElementById('right').innerHTML = claims +
+        `<div class="excerpt">model ${prov.model_version || ''} · retrieval ${prov.retrieval_version || ''} · prompt ${prov.prompt_version || ''}</div>`;
+    }
+    async function approve() {
+      if (!threadId) return;
+      await fetch('/approve/' + threadId, {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({action: 'approve'})
+      });
+    }
+    async function reject() {
+      if (!threadId) return;
+      await fetch('/approve/' + threadId, {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({action: 'reject'})
+      });
+    }
+  </script>
+</body>
+</html>
