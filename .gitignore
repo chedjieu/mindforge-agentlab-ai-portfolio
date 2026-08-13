@@ -1,5 +1,6 @@
 # IDE / local agent
 .cursor/
+.cursor.md
 .vscode/
 .idea/
 

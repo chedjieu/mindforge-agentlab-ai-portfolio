@@ -1,9 +1,6 @@
 # IDE / agent local state
-.cursor/*
-!.cursor/plan-overview.md
-!.cursor/plan-carepath-ai.md
-!.cursor/plan-hedip.md
-!.cursor/plan-raip.md
+.cursor/
+.cursor.md
 .vscode/
 .idea/
 
