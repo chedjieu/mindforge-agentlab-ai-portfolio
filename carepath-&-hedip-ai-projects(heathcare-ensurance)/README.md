@@ -90,7 +90,26 @@ Open [http://127.0.0.1:8011](http://127.0.0.1:8011)
 
 ## Quality gates
 
-Injection suites must pass **≥ 95%** before promote. Per package: `uv run python -m evals.run_all` and `uv run python -m security.injection_eval` with `*_MODEL=fake` (RAIP: `bash scripts/with-python.sh`).
+From this directory, with a model env var set, the same commands the packages use are forwarded into that sister project (`RAIP_MODEL` → `raip/`, `CAREPATH_MODEL` → `carepath-ai/`, `HEDIP_MODEL` → `hedip/`). If none is set, all three run.
+
+```powershell
+$env:RAIP_MODEL = "fake"
+uv sync --python 3.12
+uv run pytest
+uv run python -m evals.run_all
+uv run python -m security.injection_eval
+```
+
+On this Windows machine `uv run` often cannot spawn `*\Scripts\python.exe` (Access is denied). Use the uv-managed interpreter instead:
+
+```powershell
+$env:RAIP_MODEL = "fake"
+.\scripts\with-python.ps1 -m pytest
+.\scripts\with-python.ps1 -m evals.run_all
+.\scripts\with-python.ps1 -m security.injection_eval
+```
+
+Or `cd` into `carepath-ai`, `hedip`, or `raip` and run the package commands there. Injection suites must pass **≥ 95%** before promote.
 
 ## Layout
 

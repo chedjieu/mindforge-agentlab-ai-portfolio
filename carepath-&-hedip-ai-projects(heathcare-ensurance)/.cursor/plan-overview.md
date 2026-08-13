@@ -12,7 +12,17 @@ An integrated enterprise ecosystem for AI-driven patient care navigation, qualit
 | [`hedip`](../hedip/README.md) | HEDI Platform | Quality / HEDIS-oriented performance engine | Multi-domain healthcare decision intelligence | **8009** |
 | [`raip`](../raip/README.md) | RAIP Engine | Risk adjustment and quality-incentive processing | Evidence-first clinical/regulatory authoring (ReguMed) | **8011** |
 
-Detailed plans: [plan-carepath-ai.md](plan-carepath-ai.md) · [plan-hedip.md](plan-hedip.md) · [plan-raip.md](plan-raip.md).
+Detailed plans (each file includes suite framing **and** the original delivery plan in full): [plan-carepath-ai.md](plan-carepath-ai.md) · [plan-hedip.md](plan-hedip.md) · [plan-raip.md](plan-raip.md).
+
+### Merged sources
+
+| Canonical file | Preexisting plan(s) folded in |
+|----------------|-------------------------------|
+| [plan-carepath-ai.md](plan-carepath-ai.md) | `.cursor/plans/carepath_ai_plan_f38ddef2.plan.md` |
+| [plan-hedip.md](plan-hedip.md) | `.cursor/plans/hedip_umbrella_platform.plan.md` |
+| [plan-raip.md](plan-raip.md) | `raip/.cursor/plan.md` (checklist) + `raip/.cursor/raip_evidence_platform_ae578724.plan.md` (architecture) |
+
+Original files remain in place with a pointer to the canonical copy. Edit the canonical files.
 
 ---
 
