@@ -8,7 +8,7 @@ The three packages are **sister projects** — shared LangGraph / GraphRAG / HIT
 | :--- | :--- | ---: | :--- |
 | **[CarePath AI](./carepath-ai)** | Care pathways and clinical decision support | **8007** | [README](carepath-ai/README.md) · [AS_BUILT](carepath-ai/AS_BUILT.md) · [System design](carepath-ai/docs/SYSTEM_DESIGN.md) |
 | **[HEDI Platform](./hedip)** | Quality / HEDIS-oriented decision intelligence | **8009** | [README](hedip/README.md) · [AS_BUILT](hedip/AS_BUILT.md) · [System design](hedip/docs/SYSTEM_DESIGN.md) |
-| **[RAIP Engine](./raip)** | Risk adjustment and evidence-grounded authoring | **8011** | [README](raip/README.md) · [AS_BUILT](raip/AS_BUILT.md) · [System design](raip/docs/SYSTEM_DESIGN.md) · [Implementation plan](raip/docs/IMPLEMENTATION_PLAN.md) |
+| **[RAIP Engine](./raip)** | **RAIP Engine — ReguMed Authoring Intelligence Platform** | **8011** | [README](raip/README.md) · [AS_BUILT](raip/AS_BUILT.md) · [System design](raip/docs/SYSTEM_DESIGN.md) · [Implementation plan](raip/docs/IMPLEMENTATION_PLAN.md) |
 
 **How they relate:** CarePath produces a defensible care pathway. HEDIP evaluates quality, utilization, and payer/provider decisions for the same member population. RAIP grounds the documentation and coding narrative in approved sources so quality and risk-adjustment artifacts can be cited and audited. None of the three calls another at runtime.
 
@@ -48,7 +48,7 @@ Open [http://127.0.0.1:8009](http://127.0.0.1:8009)
 
 ## RAIP Engine
 
-Evidence-first authoring of clinical and regulatory document sections. Generation is subordinate to retrieved, versioned evidence. Unsupported claims cannot publish. HCC / RAF documentation is the next slice on the same publication gate.
+Evidence-grounded clinical/regulatory and risk-adjustment authoring with claim-level provenance, citation validation, HCC/RAF-ready workflows, and publication blocking for unsupported claims.
 
 ```bash
 cd raip

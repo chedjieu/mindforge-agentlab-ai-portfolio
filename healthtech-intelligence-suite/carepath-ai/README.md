@@ -8,7 +8,7 @@ LangGraph supervisor → patient data extraction → medication interaction chec
 
 Dual deploy: **Bedrock AgentCore** + **Vertex AI Agent Engine**.
 
-Suite landing page: [../README.md](../README.md). As-built: [AS_BUILT.md](AS_BUILT.md) · [docs/SYSTEM_DESIGN.md](docs/SYSTEM_DESIGN.md).
+Suite landing page: [../README.md](../README.md). Presentation design: [docs/SYSTEM_DESIGN.md](docs/SYSTEM_DESIGN.md). As-built: [AS_BUILT.md](AS_BUILT.md).
 
 ## Quick start
 
